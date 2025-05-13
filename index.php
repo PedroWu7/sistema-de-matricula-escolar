@@ -1,5 +1,7 @@
 <?php
-    session_start();
+    if (isset($_SESSION["usuario"]) && $_SESSION["usuario"] !== ""){} else {
+        session_start();
+    }
 ?>
 
 <!DOCTYPE html>
@@ -11,15 +13,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Sistema Escolar</h1>
     <section>
         <form method="post" id="formLogin" name="formLogin">
             <h1>Login</h1>
             <label for="inputUsuario">Usuário</label>
-            <input type="text" id="inputUsuario" name="inputUsuario">
+            <input type="text" id="inputUsuario" name="inputUsuario" required>
 
             <label for="inputSenha">Senha</label>
-            <input type="password" id="inputSenha" name="inputSenha">
+            <input type="password" id="inputSenha" name="inputSenha" required>
             <input type="submit" value="Logar">
         </form>
     </section>
@@ -28,10 +29,14 @@
 
 <?php
     if ($_SERVER["REQUEST_METHOD"] === "POST"){
+        require_once "banco.php";
         $inputUsuario = $_POST["inputUsuario"];
         $inputSenha = $_POST["inputSenha"];
-        
-        $_SESSION["usuario"] = $inputUsuario;
-        $_SESSION["senha"] = $inputSenha;
+        $existe = usuarioExiste($conn, $inputUsuario, $inputSenha);
+        if($existe){
+            $_SESSION["usuario"] = $inputUsuario ?? null;
+            $_SESSION["senha"] = $inputSenha ?? null;
+            header("location: dashboard.php");
+        }
     }
 ?>
