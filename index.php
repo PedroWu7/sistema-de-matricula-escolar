@@ -37,6 +37,8 @@
             $_SESSION["usuario"] = $inputUsuario ?? null;
             $_SESSION["senha"] = $inputSenha ?? null;
             header("location: dashboard.php");
-        }
+        } else { ?>
+            <p>Usuário ou senha incorretos.</p>
+        <?php }
     }
 ?>
