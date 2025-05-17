@@ -1,5 +1,5 @@
 <?php
-    $conn = new mysqli("localhost", "root", "", "sistema_escolar", "3307");
+    $conn = new mysqli("localhost", "root", "", "sistema_escolar", "3306");
     if($conn->error){ ?>
         <p>Erro ao fazer a conexão com o banco.</p>
     <?php }
@@ -21,12 +21,18 @@
     }
 
     function adicionarUsuario($conn, $nome ,$usuario, $senha){
-        $sql = "INSERT INTO alunos (id, nome, usuario, senha, nivel_acesso, cursos_matriculados) 
-            VALUES (NULL, '$nome', '$usuario', '$senha', 'aluno', NULL)";
-
-            $resp = $conn->query($sql);
-
+        $sql = "INSERT INTO alunos (id, nome, usuario, senha, nivel_acesso, cursos_matriculados) VALUES (NULL, '$nome', '$usuario', '$senha', 'aluno', NULL)";
+        $resp = $conn->query($sql);
     }
 
-    
+    function listarCursos(){
+        return [
+                    [
+                        "nome"=>"Curso de PHP", "imagem"=>"https://www.cursoemvideo.com/wp-content/uploads/2019/08/php.jpg", "descricao"=>"Curso muito bom de PHP"
+                    ],
+                    [
+                        "nome"=>"Curso de C#", "imagem"=>"https://i.ytimg.com/vi/oTivhgjbhIg/maxresdefault.jpg", "descricao"=>"Curso topzeira de C#"
+                    ]
+               ];
+    }
 ?>
