@@ -1,6 +1,14 @@
 <?php
-    if (isset($_SESSION["usuario"]) && $_SESSION["usuario"] !== ""){} else {
-        session_start();
+    session_start();
+    if (isset($_SESSION["usuario"]) && $_SESSION["usuario"] !== ""){
+        if ($_GET["from"] === "dashboard"){
+            echo "<script>";
+            echo "confirm('Vocë já está logado!');";
+            echo "window.location.href = 'dashboard.php';";
+            echo "</script>";
+        } else {
+            header("location: dashboard.php");
+        }
     }
 ?>
 

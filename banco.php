@@ -32,7 +32,10 @@
                     ],
                     [
                         "nome"=>"Curso de C#", "imagem"=>"https://i.ytimg.com/vi/oTivhgjbhIg/maxresdefault.jpg", "descricao"=>"Curso topzeira de C#"
-                    ]
+                    ],
+                    [
+                        "nome"=>"Curso de Java", "imagem"=>"https://i.ytimg.com/vi/mxDMTtCEPAY/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAbxR_ldk5IsxV2dVUPhcyJrksDTA", "descricao"=>"Melhor curso de Java"
+                    ],
                ];
     }
 ?>

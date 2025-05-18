@@ -1,6 +1,14 @@
 <?php
-    if (isset($_SESSION["usuario"]) && $_SESSION["usuario"] !== ""){} else {
-        session_start();
+    session_start();
+    if (isset($_SESSION["usuario"]) && $_SESSION["usuario"] !== ""){
+        if ($_GET["from"] === "dashboard"){
+            echo "<script>";
+            echo "confirm('Vocë já está cadastrado!');";
+            echo "window.location.href = 'dashboard.php';";
+            echo "</script>";
+        } else {
+            header("location: dashboard.php");
+        }
     }
 ?>
 
@@ -15,13 +23,14 @@
 <body>
     <section>
         <form method="post" id="formLogin" name="formLogin">
-            <h1>Login</h1>
-            <label for="criarUsuario">Usuário</label>
-            <input type="text" id="criarUsuario" name="criarUsuario" required>
+            <h1>Cadastre-se</h1>
 
             <label for="criarNome">Nome</label>
             <input type="text" id="criarNome" name="criarNome" required>
-            
+
+            <label for="criarUsuario">Usuário</label>
+            <input type="text" id="criarUsuario" name="criarUsuario" required>
+
             <label for="criarSenha">Senha</label>
             <input type="password" id="criarSenha" name="criarSenha" required>
             <input type="submit" value="Criar Conta">
