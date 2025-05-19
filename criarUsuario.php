@@ -51,3 +51,4 @@
             adicionarUsuario($conn, $_POST["criarUsuario"], $_POST["criarNome"], $_POST["criarSenha"]);
          }
     }
+?>

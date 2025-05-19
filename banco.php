@@ -38,4 +38,13 @@
                     ],
                ];
     }
+
+    function adicionarCurso($conn, $nome, $imagem, $descricao, $professor){
+
+        
+        $sql = "INSERT INTO cursos (id, nome, imagem, descricao, alunos, professor) VALUES (NULL, '$nome', '$usuario', '$senha', 'aluno', NULL)";
+        $resp = $conn->query($sql);
+
+
+    }
 ?>
