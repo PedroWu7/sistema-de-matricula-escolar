@@ -1,5 +1,5 @@
 <?php
-    $conn = new mysqli("localhost", "root", "", "sistema_escolar", "3306");
+    $conn = new mysqli("localhost", "root", "", "sistema_escolar", "3307");
     if($conn->error){ ?>
         <p>Erro ao fazer a conexão com o banco.</p>
     <?php }

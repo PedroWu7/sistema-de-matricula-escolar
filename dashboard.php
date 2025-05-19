@@ -185,8 +185,12 @@
         <p>Nível da conta: <?= $_SESSION["nivel_acesso"] ?></p>
       </div>
       <div class="direita">
-        <a class="link-header" href="index.php?from=dashboard">Login</a>
-        <a class="link-header" href="criarUsuario.php?from=dashboard">Cadastrar</a>
+        <?php if(isset($_SESSION["usuario"]) && $_SESSION["usuario"] !== "") { ?>
+          <a class="link-header" href="logout.php">Sair</a>
+        <?php  } else { ?>
+          <a class="link-header" href="index.php?from=dashboard">Login</a>
+          <a class="link-header" href="criarUsuario.php?from=dashboard">Cadastrar</a>
+        <?php } ?>
       </div>
     </div>
   </header>
