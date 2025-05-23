@@ -23,6 +23,8 @@
             <input type="password" id="inputSenha" name="inputSenha" required>
             <input type="submit" value="Logar">
             <input type="submit" onclick="window.location.href='criarUsuario.php'" value="Cadastrar">
+            <!-- Botão 'Esqueci a Senha' -->
+            <p><a href = "esqueciSenha.php">Esqueceu a senha?</a></p>
         </form>
     </section>
 </body>
