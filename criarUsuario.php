@@ -1,14 +1,7 @@
 <?php
     session_start();
-    if (isset($_SESSION["usuario"]) && $_SESSION["usuario"] !== ""){
-        if ($_GET["from"] === "dashboard"){
-            echo "<script>";
-            echo "confirm('Vocë já está cadastrado!');";
-            echo "window.location.href = 'dashboard.php';";
-            echo "</script>";
-        } else {
-            header("location: dashboard.php");
-        }
+    if(isset($_SESSION["usuario"]) && $_SESSION["usuario"] !== "" && $_SESSION["usuario"] !== "Guest") {
+        alert("Você já está cadastrado!");
     }
 ?>
 
@@ -34,6 +27,7 @@
             <label for="criarSenha">Senha</label>
             <input type="password" id="criarSenha" name="criarSenha" required>
             <input type="submit" value="Criar Conta">
+            <input type="submit" onclick="window.location.href='login.php'" value="Login">
 
             
     </section>

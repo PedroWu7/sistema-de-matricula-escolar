@@ -28,7 +28,7 @@
             <input type="text" id="criarDescricao" name="criarDescricao" required>
 
             <label for="addProfessor">Professor</label>
-            <input type="text" id="addProfessor" name="addProfessor" required>
+            <input type="text" id="addProfessor" name="addProfessor">
 
             <input type="submit" value="Criar Curso">
 
@@ -41,9 +41,8 @@
 <?php
     if ($_SERVER["REQUEST_METHOD"] === "POST"){
         require_once "banco.php";
-        $criarCurso = $_POST["criarCurso"];
 
-        adicionarCurso($conn, $_POST["criarNome"], $_POST["criarImagem"], $_POST["criarDescricao"], $_POST["criarProfessor"], );
+        adicionarCurso($conn, $_POST["criarNome"], $_POST["criarImagem"], $_POST["criarDescricao"], $_POST["addProfessor"]);
     };
     
 ?>

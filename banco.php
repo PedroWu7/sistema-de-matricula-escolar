@@ -1,4 +1,7 @@
 <?php
+    if(session_status() === PHP_SESSION_NONE){
+        session_start();
+    }
     $conn = new mysqli("localhost", "root", "", "sistema_escolar", "3307");
     if($conn->error){ ?>
         <p>Erro ao fazer a conexão com o banco.</p>
@@ -26,25 +29,17 @@
     }
 
     function listarCursos(){
-        return [
-                    [
-                        "nome"=>"Curso de PHP", "imagem"=>"https://www.cursoemvideo.com/wp-content/uploads/2019/08/php.jpg", "descricao"=>"Curso muito bom de PHP"
-                    ],
-                    [
-                        "nome"=>"Curso de C#", "imagem"=>"https://i.ytimg.com/vi/oTivhgjbhIg/maxresdefault.jpg", "descricao"=>"Curso topzeira de C#"
-                    ],
-                    [
-                        "nome"=>"Curso de Java", "imagem"=>"https://i.ytimg.com/vi/mxDMTtCEPAY/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAbxR_ldk5IsxV2dVUPhcyJrksDTA", "descricao"=>"Melhor curso de Java"
-                    ],
-               ];
+        global $conn;
+        $sql = "SELECT * FROM cursos";
+        $resp = $conn->query($sql);
+        if($resp->num_rows > 0){
+            $cursos = $resp->fetch_all();
+            return $cursos;
+        }
     }
 
     function adicionarCurso($conn, $nome, $imagem, $descricao, $professor){
-
-        
-        $sql = "INSERT INTO cursos (id, nome, imagem, descricao, alunos, professor) VALUES (NULL, '$nome', '$usuario', '$senha', 'aluno', NULL)";
+        $sql = "INSERT INTO cursos (id, nome, imagem, descricao, alunos, professor) VALUES (NULL, '$nome', '$imagem', '$descricao', NULL, '$professor')";
         $resp = $conn->query($sql);
-
-
     }
 ?>
