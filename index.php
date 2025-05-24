@@ -217,7 +217,7 @@
           <p><?= $curso[3] ?></p>
           <?php if ($_SESSION["nivel_acesso"] === "administrador") { ?>
             <a href="excluirCurso.php?id=<?= $curso[0] ?>" class="link excluir" onclick="return confirm('Tem certeza que deseja excluir este curso?')">Excluir</a>
-            <a href="atualizarCurso.php?id=<?= $curso[0] ?>" class="link atualizar">Atualizar</a>
+            <a href="editarCurso.php?id=<?= $curso[0] ?>" class="link atualizar">Editar</a>
           <?php } else { ?>
             <a href="#" class="link atualizar">Ver mais</a>
             <a href="#" class="link participar">Participar</a>
