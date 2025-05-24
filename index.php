@@ -181,7 +181,7 @@
   </style>
 </head>
 <body>
-
+  <div id="nivel-acesso" data-valor= <?= $_SESSION["nivel_acesso"] ?> </div>
   <header>
     <div class="header-container">
       <div class="esquerda">
@@ -220,7 +220,7 @@
             <a href="editarCurso.php?id=<?= $curso[0] ?>" class="link atualizar">Editar</a>
           <?php } else { ?>
             <a href="#" class="link atualizar">Ver mais</a>
-            <a href="#" class="link participar">Participar</a>
+            <a href="#" class="link participar btn-participar">Participar</a>
           <?php } ?>
         </div>
     <?php } ?>
