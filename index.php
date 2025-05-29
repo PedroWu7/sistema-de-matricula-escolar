@@ -1,4 +1,5 @@
 <?php
+    require_once "banco.php";
     if (session_status() === PHP_SESSION_NONE) {
       session_start();
     }
@@ -7,6 +8,11 @@
         $_SESSION["usuario"] = "Guest";
         $_SESSION["nivel_acesso"] = "visitante";
     }
+
+    if(isset($_GET["idCurso"]) && $_GET["idCurso"] !== ""){ 
+      echo "Sucesso! Agora vc está participando do curso " . $_GET["idCurso"];
+      adicionarAlunoEmCurso($conn, $_GET["idCurso"]);
+    } 
 ?>
 
 <!DOCTYPE html>
@@ -181,7 +187,7 @@
   </style>
 </head>
 <body>
-  <div id="nivel-acesso" data-valor= <?= $_SESSION["nivel_acesso"] ?> </div>
+  <div id="nivel-acesso" data-valor= <?= $_SESSION["nivel_acesso"] ?>></div>
   <header>
     <div class="header-container">
       <div class="esquerda">
@@ -220,7 +226,7 @@
             <a href="editarCurso.php?id=<?= $curso[0] ?>" class="link atualizar">Editar</a>
           <?php } else { ?>
             <a href="#" class="link atualizar">Ver mais</a>
-            <a href="#" class="link participar btn-participar">Participar</a>
+            <a href="index.php?idCurso=<?= $curso[1] ?>" class="link participar btn-participar">Participar</a>
           <?php } ?>
         </div>
     <?php } ?>
