@@ -1,7 +1,7 @@
 <?php
     session_start();
     if(isset($_SESSION["usuario"]) && $_SESSION["usuario"] !== "" && $_SESSION["usuario"] !== "Guest") {
-        alert("Você já está cadastrado!");
+        echo "Você já está cadastrado!";//arrumar dps
     }
 ?>
 
@@ -42,7 +42,7 @@
         if($existe){
             echo"Usuario já existente.";
         } else { 
-            adicionarUsuario($conn, $_POST["criarUsuario"], $_POST["criarNome"], $_POST["criarSenha"]);
+            adicionarUsuario($conn, $_POST["criarUsuario"], $_POST["criarNome"]);
          }
     }
 ?>

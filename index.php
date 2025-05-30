@@ -3,7 +3,7 @@
     if (session_status() === PHP_SESSION_NONE) {
       session_start();
     }
-  
+
     if (!isset($_SESSION["usuario"])) {
         $_SESSION["usuario"] = "Guest";
         $_SESSION["nivel_acesso"] = "visitante";
@@ -187,7 +187,7 @@
   </style>
 </head>
 <body>
-  <div id="nivel-acesso" data-valor= <?= $_SESSION["nivel_acesso"] ?>></div>
+  <div id="nivel-acesso" data-valor= <?= $_SESSION["nivel_acesso"] ?> ></div>
   <header>
     <div class="header-container">
       <div class="esquerda">
@@ -232,6 +232,5 @@
     <?php } ?>
   </div>
 
-  <script src="script.js"></script>
 </body>
 </html>
