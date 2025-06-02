@@ -8,17 +8,17 @@
     <?php }
 
 
-    $senha_pura = $_SESSION["criarSenha"] ?? "";
-    $hash_armazenado = password_hash($senha_pura, PASSWORD_DEFAULT);
+    
 
-    function usuarioExiste($conn, $usuario){
+    function usuarioExiste($conn, $usuario, $inputSenha){
         $q = "SELECT * FROM alunos WHERE usuario = '$usuario'";
         $resultado = $conn->query($q);
+
         if ($resultado->num_rows > 0){
             $aluno = $resultado->fetch_assoc();
             $hash_armazenado = $aluno["senha"];
-            if(password_verify($_SESSION["senha"], $hash_armazenado)){
 
+            if(password_verify($inputSenha, $hash_armazenado)){
                 $_SESSION["id"] = $aluno["id"];
                 $_SESSION["nome"] = $aluno["nome"];
                 $_SESSION["usuario"] = $aluno["usuario"];
@@ -30,17 +30,28 @@
         return false;
     }
 
-    function adicionarUsuario($conn, $nome ,$usuario){
-        global $hash_armazenado;
 
-        if(!password_verify("", $hash_armazenado)){
-            $sql = "INSERT INTO alunos (id, nome, usuario, senha, nivel_acesso, cursos_matriculados) VALUES (NULL, '$nome', '$usuario', '$hash_armazenado', 'aluno', NULL)";
+    function adicionarUsuario($conn, $nome, $usuario, $senha) {
+        // Gerar o hash da senha
+        $hash_armazenado = password_hash($senha, PASSWORD_DEFAULT);
+    
+        // Verificar se o hash foi gerado corretamente
+        if ($hash_armazenado) {
+            // Inserir no banco de dados com o hash
+            $sql = "INSERT INTO alunos (id, nome, usuario, senha, nivel_acesso, cursos_matriculados) 
+                    VALUES (NULL, '$nome', '$usuario', '$hash_armazenado', 'aluno', NULL)";
             $resp = $conn->query($sql);
-        }else{
-            echo "digite senha";
+            
+            if ($resp) {
+                echo "Usuário criado com sucesso!";
+            } else {
+                echo "Erro ao criar o usuário: " . $conn->error;
+            }
+        } else {
+            echo "Erro ao gerar o hash da senha.";
         }
-        
     }
+    
 
     function listarCursos(){
         global $conn;

@@ -34,7 +34,9 @@
     if ($_SERVER["REQUEST_METHOD"] === "POST"){
         include "banco.php";
         $inputUsuario = $_POST["inputUsuario"];
-        $existe = usuarioExiste($conn, $inputUsuario);
+        $inputSenha = $_POST["inputSenha"];
+
+        $existe = usuarioExiste($conn, $inputUsuario, $inputSenha);
         if($existe){
             header("location: index.php");
         } else { ?>

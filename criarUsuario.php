@@ -38,11 +38,12 @@
     if ($_SERVER["REQUEST_METHOD"] === "POST"){
         require_once "banco.php";
         $criarUsuario = $_POST["criarUsuario"];
-        $existe = usuarioExiste($conn, $criarUsuario);
+        $criarSenha = $_POST["criarSenha"];
+        $existe = usuarioExiste($conn, $criarUsuario, $criarSenha);
         if($existe){
             echo"Usuario já existente.";
         } else { 
-            adicionarUsuario($conn, $_POST["criarUsuario"], $_POST["criarNome"]);
+            adicionarUsuario($conn, $_POST["criarUsuario"], $_POST["criarNome"], $_POST["criarSenha"]);
          }
     }
 ?>
