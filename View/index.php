@@ -1,5 +1,4 @@
 <?php
-    require_once "banco.php";
     if (session_status() === PHP_SESSION_NONE) {
       session_start();
     }
@@ -214,8 +213,8 @@
   <h1>Cursos Disponíveis</h1>
   <div class="cursos" id="cursos">
     <?php
-      require_once "banco.php";
-      $cursos = listarCursos();
+      require __DIR__ . "\..\Model\Curso.php";
+      $cursos = Curso::listarCursos();
       foreach($cursos as $curso) { ?>
         <div class="curso">
           <p><?= $curso[1] ?></p>
