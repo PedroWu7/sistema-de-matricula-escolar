@@ -1,0 +1,11 @@
+admin:
+    usuario: admin
+    senha: admin
+
+kaue:
+    usuario: kaue
+    senha: 123
+
+pedro: 
+    usuario: pedro
+    seha: 123
