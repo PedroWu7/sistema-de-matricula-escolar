@@ -1,7 +1,11 @@
 <?php
-    require __DIR__ . "\..\Config\Banco.php";
+    require_once __DIR__ . "\..\Config\Banco.php";
+
+
     class Usuario {
         public static function login($usuario, $senha){
+            
+
             $q = "SELECT * FROM alunos WHERE usuario = '$usuario'";
             $resultado = Banco::Conn()->query($q);
             if($resultado->num_rows > 0){
@@ -20,6 +24,7 @@
             }
             return false;
         }
+    
 
         public static function existe($usuario){
             $q = "SELECT * FROM alunos WHERE usuario = '$usuario'";

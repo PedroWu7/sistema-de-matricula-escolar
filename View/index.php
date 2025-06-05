@@ -8,10 +8,7 @@
         $_SESSION["nivel_acesso"] = "visitante";
     }
 
-    if(isset($_GET["idCurso"]) && $_GET["idCurso"] !== ""){ 
-      echo "Sucesso! Agora vc está participando do curso " . $_GET["idCurso"];
-      adicionarAlunoEmCurso($conn, $_GET["idCurso"]);
-    } 
+    
 ?>
 
 <!DOCTYPE html>
@@ -195,10 +192,10 @@
       </div>
       <div class="direita">
         <?php if(isset($_SESSION["usuario"]) && $_SESSION["usuario"] !== "" && $_SESSION["usuario"] !== "Guest") { ?>
-          <a class="link-header" href="logout.php">Sair</a>
+          <a class="link-header" href="../logout.php">Sair</a>
         <?php  } else { ?>
-          <a class="link-header" href="login.php">Login</a>
-          <a class="link-header" href="criarUsuario.php">Cadastrar</a>
+          <a class="link-header" href="../login">Login</a>
+          <a class="link-header" href="../cadastrar">Cadastrar</a>
         <?php } ?>
       </div>
     </div>
