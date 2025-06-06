@@ -192,7 +192,7 @@
       </div>
       <div class="direita">
         <?php if(isset($_SESSION["usuario"]) && $_SESSION["usuario"] !== "" && $_SESSION["usuario"] !== "Guest") { ?>
-          <a class="link-header" href="../logout.php">Sair</a>
+          <a class="link-header" href="logout">Sair</a>
         <?php  } else { ?>
           <a class="link-header" href="login">Login</a>
           <a class="link-header" href="cadastrar">Cadastrar</a>
@@ -219,7 +219,7 @@
           <p><?= $curso[3] ?></p>
           <?php if ($_SESSION["nivel_acesso"] === "administrador") { ?>
             <a href="excluirCurso.php?id=<?= $curso[0] ?>" class="link excluir" onclick="return confirm('Tem certeza que deseja excluir este curso?')">Excluir</a>
-            <a href="editarCurso.php?id=<?= $curso[0] ?>" class="link atualizar">Editar</a>
+            <a href="atualizar/curso/<?= $curso[0] ?>" class="link atualizar">Editar</a>
           <?php } else { ?>
             <a href="#" class="link atualizar">Ver mais</a>
             <a href="index.php?idCurso=<?= $curso[1] ?>" class="link participar btn-participar">Participar</a>

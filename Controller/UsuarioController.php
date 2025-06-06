@@ -11,7 +11,7 @@ class UsuarioController{
 
             $login = Usuario::login($inputUsuario, $inputSenha);
             if($login){
-                header("location: ../sistema-de-matricula-escolar/View/index.php");
+                header("location: index");
             } else { ?>
                 <p>Usuário ou senha incorretos.</p>
             <?php }

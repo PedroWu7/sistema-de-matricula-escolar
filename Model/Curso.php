@@ -11,19 +11,19 @@
             }
         }
 
-        function adicionarCurso($conn, $nome, $imagem, $descricao, $professor){
+        function adicionarCurso($nome, $imagem, $descricao, $professor){
             $sql = "INSERT INTO cursos (id, nome, imagem, descricao, alunos, professor) VALUES (NULL, '$nome', '$imagem', '$descricao', NULL, '$professor')";
-            $resp = $conn->query($sql);
+            $resp = Banco::Conn()->query($sql);
         }
 
-        function adicionarAlunoEmCurso($conn, $idCurso){
+        function adicionarAlunoEmCurso($idCurso){
             $sql2 = "SELECT * FROM cursos WHERE `cursos`.`nome` = '$idCurso';";
-            $resultado = $conn->query($sql2);
+            $resultado = Banco::Conn()->query($sql2);
             $linhas = $resultado->num_rows;
             if ( $linhas > 0){
                 $aluno = $resultado->fetch_assoc()['alunos'];
                 $sql = "UPDATE `cursos` SET `alunos` = '$idCurso' WHERE `cursos`.`alunos` = '$aluno' . '$idCurso';";
-                $resp = $conn->query($sql);
+                $resp = Banco::Conn()->query($sql);
             }
             
         }
@@ -34,6 +34,11 @@
 
         static function adicionarUsuario($nome, $usuario, $senha) {
             
+        }
+
+        static function atualizarCurso($nome, $imagem, $descricao, $professor, $id){
+            $sql = "UPDATE cursos SET nome = '$nome', imagem = '$imagem', descricao = '$descricao', professor = '$professor' WHERE id = $id";
+            $resp = Banco::Conn()->query($sql);
         }
     } 
 ?>

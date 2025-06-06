@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "banco.php";
+require_once __DIR__ ."/Config/Banco.php";
 
 if ($_SESSION["nivel_acesso"] !== "administrador") {
     header("Location: index.php");
@@ -13,7 +13,7 @@ if (isset($_GET["id"])) {
     $res = $conn->query($sql);
     $curso = $res->fetch_assoc();
 } else {
-    header("Location: index.php");
+    header("Location: index");
     exit;
 }
 ?>
