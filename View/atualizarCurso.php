@@ -1,22 +1,4 @@
-<?php
-session_start();
-require_once __DIR__ ."/Config/Banco.php";
 
-if ($_SESSION["nivel_acesso"] !== "administrador") {
-    header("Location: index.php");
-    exit;
-}
-
-if (isset($_GET["id"])) {
-    $id = intval($_GET["id"]);
-    $sql = "SELECT * FROM cursos WHERE id = $id";
-    $res = $conn->query($sql);
-    $curso = $res->fetch_assoc();
-} else {
-    header("Location: index");
-    exit;
-}
-?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
