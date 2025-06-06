@@ -194,8 +194,8 @@
         <?php if(isset($_SESSION["usuario"]) && $_SESSION["usuario"] !== "" && $_SESSION["usuario"] !== "Guest") { ?>
           <a class="link-header" href="../logout.php">Sair</a>
         <?php  } else { ?>
-          <a class="link-header" href="../login">Login</a>
-          <a class="link-header" href="../cadastrar">Cadastrar</a>
+          <a class="link-header" href="login">Login</a>
+          <a class="link-header" href="cadastrar">Cadastrar</a>
         <?php } ?>
       </div>
     </div>
@@ -210,7 +210,7 @@
   <h1>Cursos Disponíveis</h1>
   <div class="cursos" id="cursos">
     <?php
-      require __DIR__ . "\..\Model\Curso.php";
+      require_once __DIR__ . "\..\Model\Curso.php";
       $cursos = Curso::listarCursos();
       foreach($cursos as $curso) { ?>
         <div class="curso">

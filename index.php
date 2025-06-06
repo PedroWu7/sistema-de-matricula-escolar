@@ -10,6 +10,7 @@ $pagina = $_GET['p'] ?? null;
     match($url[0]){
         "cadastrar" => UsuarioController::cadastrar(),
         "login" => UsuarioController::login(),
+        default => HomeController::index()
     }
 
 
