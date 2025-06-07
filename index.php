@@ -16,6 +16,7 @@
         "excluir" => CursoController::excluir($url[2]),
         "adicionar" => CursoController::adicionar(),
         "participar" => CursoController::participar($url[2]),
+        "gerenciar" => HomeController::gerenciar(),
         default => HomeController::index()
     }
 

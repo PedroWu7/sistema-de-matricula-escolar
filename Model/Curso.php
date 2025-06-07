@@ -43,6 +43,9 @@
             if($resp->num_rows > 0){
                 $curso_alunos = $resp->fetch_assoc()["alunos"];
             }
+            if(str_contains($curso_alunos, "$usuario")){
+                return "inscrito";
+            }
             $novos_alunos = $curso_alunos . $usuario;
 
             echo $novos_alunos;

@@ -45,6 +45,35 @@ class UsuarioController{
         include __DIR__ . "/../View/cadastrar.html";
 
     }
+
+    static function matricular($idUsuario, $idCurso){
+        if($_SESSION["nivel_acesso"] !== "aluno"){
+            header("Location: ./../");
+            return;
+        }
+        $conn = Banco::Conn();
+
+        $sql = "SELECT * FROM alunos WHERE id = '$idUsuario'";
+        $resp = $conn->query($sql);
+        if($resp->num_rows > 0){
+            $curso_alunos = $resp->fetch_assoc()["cursos_matriculados"];
+        }
+        if(str_contains($curso_alunos, $idCurso)){
+            return "inscrito";
+        }
+
+        $novos_cursos = $curso_alunos . $idCurso;
+
+        $sql2 = "UPDATE `alunos` SET `cursos_matriculados` = '$novos_cursos;' WHERE `alunos`.`id` = $idUsuario;";
+        $resp = Banco::Conn()->query($sql2);
+    }
+
+    static function listar(){
+        $sql = "SELECT * FROM alunos;";
+        $resp = Banco::Conn()->query($sql);
+        $alunos = $resp->fetch_all();
+        return $alunos;
+    }
 }
 
 ?>

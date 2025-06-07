@@ -7,7 +7,13 @@ class HomeController{
             $_SESSION["usuario"] = "Guest";
             $_SESSION["nivel_acesso"] = "visitante";
         }
-        include __DIR__ . "/../View/index.php";
+        
+        if(isset($_SESSION['mensagem_alerta'])){ ?>
+            <script> alert('<?= $_SESSION['mensagem_alerta'] ?>') </script>
+            <?php $_SESSION['mensagem_alerta'] = null; ?>
+        <?php } 
+
+        include __DIR__ . "/../View/index.php"; 
     }
 
     static function logout(){
@@ -17,6 +23,10 @@ class HomeController{
         header("location: index");  
         exit;
 
+    }
+
+    static function gerenciar(){
+        include __DIR__ . "/../View/utilizadores.php"; 
     }
 }
 

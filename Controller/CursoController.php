@@ -1,5 +1,6 @@
 <?php
     require_once __DIR__ . "\..\Model\Curso.php";
+    require_once __DIR__ . "\UsuarioController.php";
     if (session_status() === PHP_SESSION_NONE) {
       session_start();
     }
@@ -10,6 +11,10 @@
         }
 
         static function adicionar(){
+            if($_SESSION["nivel_acesso"] !== "administrador"){
+                header("Location: ./../");
+                return;
+            }
             if ($_SERVER["REQUEST_METHOD"] == "POST"){
                 Curso::adicionar($_POST["criarNome"], $_POST["criarImagem"], $_POST["criarDescricao"], $_POST["addProfessor"]);
             }
@@ -17,7 +22,10 @@
         }
 
         static function atualizar($id){
-    
+            if($_SESSION["nivel_acesso"] !== "administrador"){
+                header("Location: ./../");
+                return;
+            }
             $pagina = $_GET['p'] ?? null;
             $url = explode('/', $pagina);
 
@@ -44,9 +52,9 @@
         } 
 
         static function excluir($id){
-            if ($_SESSION["nivel_acesso"] !== "administrador") {
-                header("Location: index");
-                exit;
+            if($_SESSION["nivel_acesso"] !== "administrador"){
+                header("Location: ./../");
+                return;
             }
 
             $pagina = $_GET['p'] ?? null;
@@ -67,20 +75,28 @@
         }
 
         static function participar($id){
+            if($_SESSION["nivel_acesso"] !== "aluno"){
+                header("Location: ./../");
+                return;
+            }
            $pagina = $_GET['p'] ?? null;
             $url = explode('/', $pagina);
             if (isset($url[2])) {
                 $id = intval($url[2]);
                 if(Curso::existe($id)[0]){
-                    Curso::participar($id, $_SESSION["usuario"]);
+                    $status = Curso::participar($id, $_SESSION["usuario"]);
+                    if($status === "inscrito"){
+                        $_SESSION['mensagem_alerta'] = "Você já está inscrito neste curso.";
+                    }
+                    UsuarioController::matricular($_SESSION["id"], $id);
                 } else {
                     echo "ID não encontrado.";
                     exit;
                 }
             }
 
-            //header("Location: ./../");
+            header("Location: ./../");
             exit;
         }
-    } 
+    }
 ?>
