@@ -52,5 +52,15 @@
             $sql2 = "UPDATE cursos SET alunos = '$novos_alunos' WHERE id = $id";
             $resp = Banco::Conn()->query($sql2);
         }
+
+        static function ver($id){
+            $conn = Banco::Conn();
+            $sql = "SELECT * FROM cursos WHERE id = '$id'";
+            $resp = $conn->query($sql);
+            if($resp->num_rows > 0){
+                $curso = $resp->fetch_assoc();
+                return $curso;
+            }
+        }
     } 
 ?>

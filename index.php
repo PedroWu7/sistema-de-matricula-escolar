@@ -17,6 +17,7 @@
         "adicionar" => CursoController::adicionar(),
         "participar" => CursoController::participar($url[2]),
         "gerenciar" => HomeController::gerenciar(),
+        "ver" => HomeController::ver($url[2]),
         default => HomeController::index()
     }
 

@@ -48,6 +48,7 @@ class UsuarioController{
 
     static function matricular($idUsuario, $idCurso){
         if($_SESSION["nivel_acesso"] !== "aluno"){
+            $_SESSION["mensagem_alerta"] = "Se cadastre para se inscrever em algum curso.";
             header("Location: ./../");
             return;
         }
