@@ -3,6 +3,10 @@
 class HomeController{
 
     static function index(){
+        if (!isset($_SESSION["usuario"])) {
+            $_SESSION["usuario"] = "Guest";
+            $_SESSION["nivel_acesso"] = "visitante";
+        }
         include __DIR__ . "/../View/index.php";
     }
 

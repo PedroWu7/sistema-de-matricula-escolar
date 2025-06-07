@@ -1,14 +1,3 @@
-<?php
-    if (session_status() === PHP_SESSION_NONE) {
-      session_start();
-    }
-
-    if (!isset($_SESSION["usuario"])) {
-        $_SESSION["usuario"] = "Guest";
-        $_SESSION["nivel_acesso"] = "visitante";
-    }
-?>
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -201,14 +190,13 @@
 
   <?php if ($_SESSION["nivel_acesso"] === "administrador") { ?>
     <div class="controles">
-      <button id="adicionarCurso" onclick="window.location.href='adicionar/curso'">Adicionar Curso</button>
+      <button id="adicionarCurso" onclick="window.location.href='adicionarcurso.php'">Adicionar Curso</button>
     </div>
   <?php } ?>
     
   <h1>Cursos Disponíveis</h1>
   <div class="cursos" id="cursos">
     <?php
-      require_once __DIR__ . "\..\Model\Curso.php";
       $cursos = Curso::listarCursos();
       foreach($cursos as $curso) { ?>
         <div class="curso">
@@ -216,7 +204,7 @@
           <img src="<?= $curso[2] ?>">
           <p><?= $curso[3] ?></p>
           <?php if ($_SESSION["nivel_acesso"] === "administrador") { ?>
-            <a href="excluir/curso/<?= $curso[0] ?>" class="link excluir" onclick="return confirm('Tem certeza que deseja excluir este curso?')">Excluir</a>
+            <a href="excluirCurso.php?id=<?= $curso[0] ?>" class="link excluir" onclick="return confirm('Tem certeza que deseja excluir este curso?')">Excluir</a>
             <a href="atualizar/curso/<?= $curso[0] ?>" class="link atualizar">Editar</a>
           <?php } else { ?>
             <a href="#" class="link atualizar">Ver mais</a>
