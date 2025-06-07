@@ -30,7 +30,7 @@
             return false;
         }
 
-        static function adicionarUsuario($nome, $usuario, $senha) {
+        static function adicionar($nome, $usuario, $senha) {
             $hash_armazenado = password_hash($senha, PASSWORD_DEFAULT);
             
             if ($hash_armazenado) {

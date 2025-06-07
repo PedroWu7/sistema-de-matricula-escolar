@@ -12,9 +12,10 @@
         "cadastrar" => UsuarioController::cadastrar(),
         "login" => UsuarioController::login(),
         "logout" => HomeController::logout(),
-        "atualizar" => CursoController::atualizarCurso($url[2]),
+        "atualizar" => CursoController::atualizar($url[2]),
         "excluir" => CursoController::excluir($url[2]),
         "adicionar" => CursoController::adicionar(),
+        "participar" => CursoController::participar($url[2]),
         default => HomeController::index()
     }
 

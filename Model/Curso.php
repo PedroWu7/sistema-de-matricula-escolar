@@ -1,7 +1,7 @@
 <?php
     require_once __DIR__ . "\..\Config\Banco.php";
     class Curso {
-        static function listarCursos(){
+        static function listar(){
             $conn = Banco::Conn();
             $sql = "SELECT * FROM cursos";
             $resp = $conn->query($sql);
@@ -14,18 +14,6 @@
         static function adicionar($nome, $imagem, $descricao, $professor){
             $sql = "INSERT INTO cursos (id, nome, imagem, descricao, alunos, professor) VALUES (NULL, '$nome', '$imagem', '$descricao', NULL, '$professor')";
             $resp = Banco::Conn()->query($sql);
-        }
-
-        static function adicionarAlunoEmCurso($idCurso){
-            $sql2 = "SELECT * FROM cursos WHERE `cursos`.`nome` = '$idCurso';";
-            $resultado = Banco::Conn()->query($sql2);
-            $linhas = $resultado->num_rows;
-            if ( $linhas > 0){
-                $aluno = $resultado->fetch_assoc()['alunos'];
-                $sql = "UPDATE `cursos` SET `alunos` = '$idCurso' WHERE `cursos`.`alunos` = '$aluno' . '$idCurso';";
-                $resp = Banco::Conn()->query($sql);
-            }
-            
         }
 
         static function atualizar($nome, $imagem, $descricao, $professor, $id){
@@ -45,6 +33,21 @@
         static function excluir($id){
             $sql = "DELETE FROM cursos WHERE id = $id";
             Banco::Conn()->query($sql);
+        }
+
+        static function participar($id, $usuario){
+            $usuario = "$usuario;";
+            $conn = Banco::Conn();
+            $sql = "SELECT * FROM cursos WHERE id = '$id'";
+            $resp = $conn->query($sql);
+            if($resp->num_rows > 0){
+                $curso_alunos = $resp->fetch_assoc()["alunos"];
+            }
+            $novos_alunos = $curso_alunos . $usuario;
+
+            echo $novos_alunos;
+            $sql2 = "UPDATE cursos SET alunos = '$novos_alunos' WHERE id = $id";
+            $resp = Banco::Conn()->query($sql2);
         }
     } 
 ?>

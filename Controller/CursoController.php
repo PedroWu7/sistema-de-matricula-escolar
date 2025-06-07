@@ -5,36 +5,18 @@
     }
 
     class CursoController {
-        static function listarCursos(){
-            $conn = Banco::Conn();
-            $sql = "SELECT * FROM cursos";
-            $resp = $conn->query($sql);
-            if($resp->num_rows > 0){
-                $cursos = $resp->fetch_all();
-                return $cursos;
-            }
+        static function listar(){
+            return Curso::listar();
         }
 
         static function adicionar(){
             if ($_SERVER["REQUEST_METHOD"] == "POST"){
                 Curso::adicionar($_POST["criarNome"], $_POST["criarImagem"], $_POST["criarDescricao"], $_POST["addProfessor"]);
             }
-            include __DIR__ . "/../View/adicionar-curso.php";
-        }
-        
-        static function adicionarAlunoEmCurso($idCurso){
-            $sql2 = "SELECT * FROM cursos WHERE `cursos`.`nome` = '$idCurso';";
-            $resultado = Banco::Conn()->query($sql2);
-            $linhas = $resultado->num_rows;
-            if ( $linhas > 0){
-                $aluno = $resultado->fetch_assoc()['alunos'];
-                $sql = "UPDATE `cursos` SET `alunos` = '$idCurso' WHERE `cursos`.`alunos` = '$aluno' . '$idCurso';";
-                $resp = Banco::Conn()->query($sql);
-            }
-            
+            include __DIR__ . "/../View/adicionar_curso.html";
         }
 
-        static function atualizarCurso($id){
+        static function atualizar($id){
     
             $pagina = $_GET['p'] ?? null;
             $url = explode('/', $pagina);
@@ -58,12 +40,12 @@
                 Curso::atualizar($nome, $imagem, $descricao, $professor, $id);
             }
             
-            include __DIR__ . "/../View/atualizarCurso.php";
+            include __DIR__ . "/../View/atualizar_curso.php";
         } 
 
         static function excluir($id){
             if ($_SESSION["nivel_acesso"] !== "administrador") {
-                header("Location: index.php");
+                header("Location: index");
                 exit;
             }
 
@@ -81,6 +63,23 @@
             }
 
             header("Location: ./../");
+            exit;
+        }
+
+        static function participar($id){
+           $pagina = $_GET['p'] ?? null;
+            $url = explode('/', $pagina);
+            if (isset($url[2])) {
+                $id = intval($url[2]);
+                if(Curso::existe($id)[0]){
+                    Curso::participar($id, $_SESSION["usuario"]);
+                } else {
+                    echo "ID não encontrado.";
+                    exit;
+                }
+            }
+
+            //header("Location: ./../");
             exit;
         }
     } 

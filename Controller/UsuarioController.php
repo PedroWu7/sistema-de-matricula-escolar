@@ -22,7 +22,7 @@ class UsuarioController{
                 <p>Usuário ou senha incorretos.</p>
             <?php }
         }
-        include __DIR__ . "/../View/login.php";
+        include __DIR__ . "/../View/login.html";
 
         
     }
@@ -36,13 +36,13 @@ class UsuarioController{
             if($existe){ ?>
                 <p>Usuário ou senha incorretos.</p>
             <?php } else { 
-                Usuario::adicionarUsuario($criarNome, $criarUsuario, $criarSenha);
+                Usuario::adicionar($criarNome, $criarUsuario, $criarSenha);
              }
 
 
         }
         
-        include __DIR__ . "/../View/cadastrar.php";
+        include __DIR__ . "/../View/cadastrar.html";
 
     }
 }

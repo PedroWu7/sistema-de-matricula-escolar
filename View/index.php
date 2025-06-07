@@ -257,7 +257,7 @@
       <div class="cursos-grid" id="cursos">
         <?php
           // Bloco PHP para listar os cursos foi restaurado aqui
-          $cursos = Curso::listarCursos();
+          $cursos = CursoController::listar();
           foreach($cursos as $curso) { 
         ?>
           <div class="curso-card" data-name="<?= htmlspecialchars($curso[1]) ?>" data-category="geral">
@@ -276,7 +276,7 @@
                   <a href="atualizar/curso/<?= $curso[0] ?>" class="btn btn-outline">Editar</a>
                 <?php } else { ?>
                   <a href="ver/curso/<?= $curso[0] ?>" class="btn btn-outline">Ver mais</a>
-                  <a href="index.php?idCurso=<?= $curso[1] ?>" class="btn btn-fill">Participar</a>
+                  <a href="participar/curso/<?= $curso[0] ?>" class="btn btn-fill">Participar</a>
                 <?php } ?>
               </div>
             </div>
@@ -292,7 +292,7 @@
     </main>
 
     <footer>
-      <p>&copy; <?= date("Y") ?> Plataforma de Cursos Inc. Todos os direitos reservados.</p>
+      <p>&copy; <?= date("Y") ?> Vértice Academy Inc. Todos os direitos reservados.</p>
     </footer>
   </div>
 
