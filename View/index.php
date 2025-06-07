@@ -7,8 +7,6 @@
         $_SESSION["usuario"] = "Guest";
         $_SESSION["nivel_acesso"] = "visitante";
     }
-
-    
 ?>
 
 <!DOCTYPE html>
@@ -203,7 +201,7 @@
 
   <?php if ($_SESSION["nivel_acesso"] === "administrador") { ?>
     <div class="controles">
-      <button id="adicionarCurso" onclick="window.location.href='adicionarcurso.php'">Adicionar Curso</button>
+      <button id="adicionarCurso" onclick="window.location.href='adicionar/curso'">Adicionar Curso</button>
     </div>
   <?php } ?>
     
@@ -218,7 +216,7 @@
           <img src="<?= $curso[2] ?>">
           <p><?= $curso[3] ?></p>
           <?php if ($_SESSION["nivel_acesso"] === "administrador") { ?>
-            <a href="excluirCurso.php?id=<?= $curso[0] ?>" class="link excluir" onclick="return confirm('Tem certeza que deseja excluir este curso?')">Excluir</a>
+            <a href="excluir/curso/<?= $curso[0] ?>" class="link excluir" onclick="return confirm('Tem certeza que deseja excluir este curso?')">Excluir</a>
             <a href="atualizar/curso/<?= $curso[0] ?>" class="link atualizar">Editar</a>
           <?php } else { ?>
             <a href="#" class="link atualizar">Ver mais</a>

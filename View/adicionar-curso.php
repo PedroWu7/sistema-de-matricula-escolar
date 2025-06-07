@@ -1,10 +1,3 @@
-<?php
-    session_start();
-    if (!isset($_SESSION["usuario"]) || $_SESSION["usuario"] === "") {
-        header("location: index.php");
-    }
-?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -36,13 +29,3 @@
     </section>
 </body>
 </html>
-
-
-<?php
-    if ($_SERVER["REQUEST_METHOD"] === "POST"){
-        require_once "banco.php";
-
-        adicionarCurso($conn, $_POST["criarNome"], $_POST["criarImagem"], $_POST["criarDescricao"], $_POST["addProfessor"]);
-    };
-    
-?>

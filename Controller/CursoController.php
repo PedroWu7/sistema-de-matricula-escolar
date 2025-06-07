@@ -1,7 +1,11 @@
 <?php
     require_once __DIR__ . "\..\Model\Curso.php";
+    if (session_status() === PHP_SESSION_NONE) {
+      session_start();
+    }
+
     class CursoController {
-        public static function listarCursos(){
+        static function listarCursos(){
             $conn = Banco::Conn();
             $sql = "SELECT * FROM cursos";
             $resp = $conn->query($sql);
@@ -11,12 +15,14 @@
             }
         }
 
-        function adicionarCurso($nome, $imagem, $descricao, $professor){
-            $sql = "INSERT INTO cursos (id, nome, imagem, descricao, alunos, professor) VALUES (NULL, '$nome', '$imagem', '$descricao', NULL, '$professor')";
-            $resp = Banco::Conn()->query($sql);
+        static function adicionar(){
+            if ($_SERVER["REQUEST_METHOD"] == "POST"){
+                Curso::adicionar($_POST["criarNome"], $_POST["criarImagem"], $_POST["criarDescricao"], $_POST["addProfessor"]);
+            }
+            include __DIR__ . "/../View/adicionar-curso.php";
         }
-
-        function adicionarAlunoEmCurso($idCurso){
+        
+        static function adicionarAlunoEmCurso($idCurso){
             $sql2 = "SELECT * FROM cursos WHERE `cursos`.`nome` = '$idCurso';";
             $resultado = Banco::Conn()->query($sql2);
             $linhas = $resultado->num_rows;
@@ -28,49 +34,54 @@
             
         }
 
-        public static function existe($usuario){
-            
-        }
-
-        static function adicionarUsuario($nome, $usuario, $senha) {
-            
-        }
-
         static function atualizarCurso($id){
     
+            $pagina = $_GET['p'] ?? null;
+            $url = explode('/', $pagina);
 
-        require_once __DIR__ . "/../Config/Banco.php";
-        
-        if ($_SESSION["nivel_acesso"] !== "aluno") {
-           // header("Location: index");
-            exit;
-        }else{
+            if (isset($url[2])) {  
+                $id = $url[2];
+                if(Curso::existe($id)[0]){
+                    $curso = Curso::existe($id)[1];
+                } else {
+                    echo "ID não encontrado.";
+                    exit;
+                }
+            }
+
             if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $id = intval($_POST["id"]);
                 $nome = $_POST["nome"];
                 $imagem = $_POST["imagem"];
                 $descricao = $_POST["descricao"];
                 $professor = $_POST["professor"];
-                
-                if (isset($_GET["id"])) {   
-                    $id = intval($_GET["id"]);
-                    $sql = "SELECT * FROM cursos WHERE id = $id";
-                    $res = $conn->query($sql);
-                    $curso = $res->fetch_assoc();
+                Curso::atualizar($nome, $imagem, $descricao, $professor, $id);
+            }
+            
+            include __DIR__ . "/../View/atualizarCurso.php";
+        } 
+
+        static function excluir($id){
+            if ($_SESSION["nivel_acesso"] !== "administrador") {
+                header("Location: index.php");
+                exit;
+            }
+
+            $pagina = $_GET['p'] ?? null;
+            $url = explode('/', $pagina);
+
+            if (isset($url[2])) {
+                $id = intval($url[2]);
+                if(Curso::existe($id)[0]){
+                    Curso::excluir($id);
                 } else {
-                    header("Location: index");
+                    echo "ID não encontrado.";
                     exit;
                 }
             }
-            
 
-            include __DIR__ . "View/atualizarCurso.php?id=$id";
-        }
-
-        header("Location: index");
-        exit;
-
-
+            header("Location: ./../");
+            exit;
         }
     } 
 ?>

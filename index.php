@@ -1,6 +1,6 @@
 <?php 
 
-$pagina = $_GET['p'] ?? null;
+    $pagina = $_GET['p'] ?? null;
 
     $url = explode('/', $pagina);
 
@@ -13,6 +13,8 @@ $pagina = $_GET['p'] ?? null;
         "login" => UsuarioController::login(),
         "logout" => HomeController::logout(),
         "atualizar" => CursoController::atualizarCurso($url[2]),
+        "excluir" => CursoController::excluir($url[2]),
+        "adicionar" => CursoController::adicionar(),
         default => HomeController::index()
     }
 

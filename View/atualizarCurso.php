@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>Editar Curso</h1>
-    <form method="post" action="atualizarCurso.php">
+    <form method="post" action="">
         <input type="hidden" name="id" value="<?= $curso['id'] ?>">
         <label>Nome:</label>
         <input type="text" name="nome" value="<?= $curso['nome'] ?>" required><br>

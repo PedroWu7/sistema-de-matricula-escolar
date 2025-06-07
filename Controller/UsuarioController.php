@@ -1,9 +1,10 @@
 <?php
 
 require_once __DIR__ . "/../Model/Usuario.php";
+session_start();
 
 class UsuarioController{
-        public static function login(){
+    static function login(){
 
         if ($_SERVER["REQUEST_METHOD"] === "POST"){
             $inputUsuario = $_POST["inputUsuario"];
@@ -11,6 +12,11 @@ class UsuarioController{
 
             $login = Usuario::login($inputUsuario, $inputSenha);
             if($login){
+                $_SESSION["id"] = $login["id"];
+                $_SESSION["nome"] = $login["nome"];
+                $_SESSION["usuario"] = $login["usuario"];
+                $_SESSION["nivel_acesso"] = $login["nivel_acesso"];
+                $_SESSION["cursos_matriculados"] = $login["cursos_matriculados"];
                 header("location: index");
             } else { ?>
                 <p>Usuário ou senha incorretos.</p>
@@ -23,14 +29,13 @@ class UsuarioController{
 
     static function cadastrar(){
         if ($_SERVER["REQUEST_METHOD"] === "POST"){
-            require_once __DIR__ . "\..\Model\Usuario.php";
             $criarUsuario = $_POST["criarUsuario"];
             $criarSenha = $_POST["criarSenha"];
             $criarNome = $_POST["criarNome"];
             $existe = Usuario::existe($criarUsuario, $criarSenha);
-            if($existe){
-                echo"Usuario já existente.";
-            } else { 
+            if($existe){ ?>
+                <p>Usuário ou senha incorretos.</p>
+            <?php } else { 
                 Usuario::adicionarUsuario($criarNome, $criarUsuario, $criarSenha);
              }
 
