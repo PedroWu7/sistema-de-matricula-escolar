@@ -1,5 +1,5 @@
 <?php
-    require_once __DIR__ . "\..\Config\Banco.php";
+    require_once __DIR__ . "/../Config/Banco.php";
     class Curso {
         static function listar(){
             $conn = Banco::Conn();
@@ -60,6 +60,16 @@
             if($resp->num_rows > 0){
                 $curso = $resp->fetch_assoc();
                 return $curso;
+            }
+        }
+
+        static function listarMeus($usuario){
+            $conn = Banco::Conn();
+            $sql = "SELECT * FROM cursos WHERE alunos LIKE '%$usuario%'";
+            $resp = $conn->query($sql);
+            if($resp->num_rows > 0){
+                $cursos = $resp->fetch_all();
+                return $cursos;
             }
         }
     } 

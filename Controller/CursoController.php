@@ -1,6 +1,6 @@
 <?php
-    require_once __DIR__ . "\..\Model\Curso.php";
-    require_once __DIR__ . "\UsuarioController.php";
+    require_once __DIR__ . "/../Model/Curso.php";
+    require_once __DIR__ . "/UsuarioController.php";
     if (session_status() === PHP_SESSION_NONE) {
       session_start();
     }
@@ -48,6 +48,8 @@
                 $descricao = $_POST["descricao"];
                 $professor = $_POST["professor"];
                 Curso::atualizar($nome, $imagem, $descricao, $professor, $id);
+                $_SESSION["mensagem_alerta"] = "Curso atualizado com sucesso!";
+                header("location: ../../index");
             }
             
             include __DIR__ . "/../View/atualizar_curso.php";
@@ -91,6 +93,8 @@
                     $status = Curso::participar($id, $_SESSION["usuario"]);
                     if($status === "inscrito"){
                         $_SESSION['mensagem_alerta'] = "Você já está inscrito neste curso.";
+                    } else {
+                        $_SESSION['mensagem_alerta'] = "Parabéns! Você se inscreveu no curso.";
                     }
                     UsuarioController::matricular($_SESSION["id"], $id);
                 } else {
@@ -118,6 +122,10 @@
 
             return $curso;
             header("Location: ./../");
+        }
+
+        static function listarMeus(){
+            return Curso::listarMeus($_SESSION["usuario"]);
         }
     }
 ?>

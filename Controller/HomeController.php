@@ -49,5 +49,15 @@ class HomeController {
     static function ver() {
         include __DIR__ . "/../View/curso.php";
     }
+
+    static function meusCursos() {
+        if (!isset($_SESSION["nivel_acesso"]) || $_SESSION["nivel_acesso"] !== "aluno") {
+            $_SESSION["mensagem_alerta"] = "Você não tem acesso a essa página.";
+            header("Location: index");
+            exit;
+        }
+
+        include __DIR__ . "/../View/meus_cursos.php";
+    }
 }
 ?>

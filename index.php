@@ -1,6 +1,9 @@
 <?php 
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
 
-    $pagina = $_GET['p'] ?? null;
+    $pagina = $_GET['p'] ?? "";
 
     $url = explode('/', $pagina);
 
@@ -18,6 +21,7 @@
         "participar" => CursoController::participar($url[2]),
         "gerenciar" => HomeController::gerenciar(),
         "ver" => HomeController::ver($url[2]),
+        "meus-cursos" => HomeController::meusCursos(),
         default => HomeController::index()
     }
 

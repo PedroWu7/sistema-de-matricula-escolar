@@ -151,8 +151,8 @@
             </div>
             
             <div class="form-group">
-                <label for="professor">Professor (ID ou Nome)</label>
-                <input type="text" id="professor" name="professor" value="<?= htmlspecialchars($curso['professor']) ?>">
+                <label for="professor">Professor (Nome)</label>
+                <input type="text" id="professor" name="professor" value="<?= $curso['professor'] ?>">
             </div>
             
             <button type="submit" class="btn btn-fill">Atualizar Curso</button>

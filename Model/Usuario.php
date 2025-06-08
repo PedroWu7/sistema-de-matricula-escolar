@@ -1,5 +1,5 @@
 <?php
-    require_once __DIR__ . "\..\Config\Banco.php";
+    require_once __DIR__ . "/../Config/Banco.php";
 
 
     class Usuario {

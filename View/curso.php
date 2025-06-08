@@ -272,7 +272,7 @@
         <div class="summary-card">
           <img src="<?= htmlspecialchars($curso['imagem']) ?>" alt="Banner do curso">
           <div class="summary-content">
-            <a href="index.php?idCurso=<?= htmlspecialchars($curso['id'] ?? 0) ?>" class="btn btn-fill">Participar no Curso</a>
+            <a href="../../participar/curso/<?= htmlspecialchars($curso['id'] ?? 0) ?>" class="btn btn-fill">Participar no Curso</a>
             <ul class="summary-list">
               <li>
                 <span class="label">Nível</span>
@@ -294,7 +294,7 @@
   </main>
 
   <footer>
-    <p>&copy; <?= date("Y") ?> Plataforma de Cursos Inc. Todos os direitos reservados.</p>
+    <p>&copy; <?= date("Y") ?> Vértice Academy Inc. Todos os direitos reservados.</p>
   </footer>
 </div>
 </body>
