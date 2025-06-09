@@ -46,6 +46,10 @@ class UsuarioController{
 
     }
 
+    static function esqueciSenha(){
+        include __DIR__ . "/../View/esqueciSenha.php";
+    }
+
     static function matricular($idUsuario, $idCurso){
         if($_SESSION["nivel_acesso"] !== "aluno"){
             $_SESSION["mensagem_alerta"] = "Se cadastre para se inscrever em algum curso.";

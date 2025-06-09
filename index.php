@@ -10,6 +10,7 @@
     require_once "Controller/HomeController.php";
     require_once "Controller/UsuarioController.php";
     require_once "Controller/CursoController.php";
+    require_once "Controller/ComentarioController.php";
 
     match($url[0]){
         "cadastrar" => UsuarioController::cadastrar(),
@@ -22,6 +23,9 @@
         "gerenciar" => HomeController::gerenciar(),
         "ver" => HomeController::ver($url[2]),
         "meus-cursos" => HomeController::meusCursos(),
+        "esqueciSenha" => UsuarioController::esquecisenha(),
+        "comentario"=> ComentarioController::salvar(),
+
         default => HomeController::index()
     }
 

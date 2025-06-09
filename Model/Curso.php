@@ -1,5 +1,7 @@
 <?php
     require_once __DIR__ . "/../Config/Banco.php";
+    require_once __DIR__ . "/../Model/Comentario.php";
+    
     class Curso {
         static function listar(){
             $conn = Banco::Conn();
