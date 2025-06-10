@@ -79,6 +79,23 @@ class UsuarioController{
         $alunos = $resp->fetch_all();
         return $alunos;
     }
+
+    static function recuperarSenha(){
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            $usuarioEmail = $_POST["usuarioEmail"];
+        
+            $sql = "SELECT * FROM alunos WHERE usuario = '$usuarioEmail'";
+            $result = Banco::Conn()->query($sql);
+        
+            if ($result->num_rows > 0) {
+                echo "<p>Instruções para redefinir a senha foram enviadas (simulação).</p>";
+            } else {
+                echo "<p>Usuário não encontrado.</p>";
+            }
+        }
+
+        include __DIR__ . "/../View/recuperar_senha.php";
+    }
 }
 
 ?>

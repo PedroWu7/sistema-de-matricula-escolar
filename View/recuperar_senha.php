@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
+  <title>Recuperar senha</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -132,24 +132,24 @@
 <body>
     <div class="login-container">
         <form method="post" action="" id="formLogin" name="formLogin">
-            <h1>Login</h1>
+            <h1>Recuperar senha</h1>
             <div class="form-group">
                 <label for="inputUsuario">Utilizador</label>
                 <input type="text" id="inputUsuario" name="inputUsuario" required>
             </div>
             
-            <div class="form-group">
-                <label for="inputSenha">Senha</label>
-                <input type="password" id="inputSenha" name="inputSenha" required>
-            </div>
-            
-            <button type="submit" class="btn btn-fill">Logar</button>
-            <button type="button" class="btn btn-outline" onclick="window.location.href='cadastrar'">Criar Conta</button>
-            
-            <div class="links-footer">
-                <a href="recuperar-senha">Esqueceu a senha?</a>
-            </div>
+            <button type="submit" class="btn btn-fill">Recuperar</button>
+            <button type="button" class="btn btn-outline" onclick="window.location.href='login'">Voltar</button>
         </form>
     </div>
 </body>
 </html>
+
+
+
+
+
+
+
+
+

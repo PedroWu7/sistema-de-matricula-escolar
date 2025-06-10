@@ -23,7 +23,7 @@
         "gerenciar" => HomeController::gerenciar(),
         "ver" => HomeController::ver($url[2]),
         "meus-cursos" => HomeController::meusCursos(),
-        "esqueciSenha" => UsuarioController::esquecisenha(),
+        "recuperar-senha" => UsuarioController::recuperarSenha(),
         "comentario"=> ComentarioController::salvar(),
 
         default => HomeController::index()
