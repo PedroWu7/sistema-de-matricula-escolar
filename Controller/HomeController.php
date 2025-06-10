@@ -56,8 +56,8 @@ class HomeController {
             $texto = trim($_POST["comentario"]);
     
             if (!empty($texto)) {
-                echo "asa";
                 Comentario::salvar($curso_id, $autor, $texto);
+                
 
                 exit;
             }
