@@ -80,22 +80,47 @@ class UsuarioController{
         return $alunos;
     }
 
-    static function recuperarSenha(){
+    static function recuperarSenha() {
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
-            $usuarioEmail = $_POST["usuarioEmail"];
-        
-            $sql = "SELECT * FROM alunos WHERE usuario = '$usuarioEmail'";
-            $result = Banco::Conn()->query($sql);
-        
-            if ($result->num_rows > 0) {
-                echo "<p>Instruções para redefinir a senha foram enviadas (simulação).</p>";
-            } else {
-                echo "<p>Usuário não encontrado.</p>";
+    
+            // Etapa 1: Verifica o usuário
+            if (isset($_POST["inputUsuario"])) {
+                $inputUsuario = $_POST["inputUsuario"];
+                $sql = "SELECT * FROM alunos WHERE usuario = '$inputUsuario'";
+                $result = Banco::Conn()->query($sql);
+    
+                if ($result->num_rows > 0) {
+                    // Salva o usuário temporariamente na sessão
+                    $_SESSION["usuario_recuperacao"] = $inputUsuario;
+                    include __DIR__ . "/../View/recuperar_cpf.html";
+                    return;
+                } else {
+                    echo "<p>Usuário não encontrado.</p>";
+                    include __DIR__ . "/../View/recuperar_senha.html";
+                    return;
+                }
+            }
+    
+            // Etapa 2: Verifica o CPF
+            if (isset($_POST["inputCpf"]) && isset($_SESSION["usuario_recuperacao"])) {
+                $inputCpf = $_POST["inputCpf"];
+                $usuario = $_SESSION["usuario_recuperacao"];
+                $recuperar = true;
+                include __DIR__ . "/../View/recuperar_nova.html";
+                return;
+            }
+
+            if(isset($_POST["inputSenha"])){
+                $_SESSION["mensagem_alerta"] = "Senha alterada com sucesso!";
+                header("location: ./index");
+                return;
             }
         }
-
-        include __DIR__ . "/../View/recuperar_senha.php";
+    
+        // Primeira vez acessando
+        include __DIR__ . "/../View/recuperar_senha.html";
     }
+    
 }
 
 ?>
