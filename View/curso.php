@@ -237,7 +237,6 @@
     require_once __DIR__ . "/../Model/Comentario.php";
     
     $curso = CursoController::ver();
-    ComentarioController::salvar(); // Salva comentário, se enviado
     $comentarios = Comentario::listarPorCurso($curso['id']);
     ?>
       $curso = CursoController::ver();
@@ -300,33 +299,35 @@
       </aside>
     </div> 
     <div>
-    <div class="comments-section">
-      <h2>Comentários</h2>
+      <?php  if($_SESSION['nivel_acesso'] !== "visitante"){?>
+        <div class="comments-section">
+          <h2>Comentários</h2>
 
-      <!-- Formulário para adicionar um novo comentário -->
-      <form method="POST">
-        <textarea name="comentario" rows="4" placeholder="Escreva seu comentário aqui..." required></textarea>
-        <br>
-        <button type="submit" class="btn btn-fill"  onclick="window.location.href='comentario'">Enviar Comentário</button>
-      </form>
+          <!-- Formulário para adicionar um novo comentário -->
+          <form method="POST">
+            <textarea name="comentario" rows="4" placeholder="Escreva seu comentário aqui..." required></textarea>
+            <br>
+            <button type="submit" class="btn btn-fill"  >Enviar Comentário</button>
+          </form>
 
-      <hr>
+          <hr>
 
-      <!-- Lista de comentários existentes -->
-      <div class="comments-list">
-        <?php if (!empty($comentarios)): ?>
-          <?php foreach ($comentarios as $comentario): ?>
-            <div class="comentario">
-              <p><strong><?= htmlspecialchars($comentario['autor']) ?>:</strong></p>
-              <p><?= nl2br(htmlspecialchars($comentario['texto'])) ?></p>
-              <hr>
-            </div>
-          <?php endforeach; ?>
-        <?php else: ?>
-          <p>Seja o primeiro a comentar!</p>
-        <?php endif; ?>
-      </div>
-    </div>
+          <!-- Lista de comentários existentes -->
+          <div class="comments-list">
+            <?php if (!empty($comentarios)): ?>
+              <?php foreach ($comentarios as $comentario): ?>
+                <div class="comentario">
+                  <p><strong><?= htmlspecialchars($comentario['autor']) ?>:</strong></p>
+                  <p><?= nl2br(htmlspecialchars($comentario['texto'])) ?></p>
+                  <hr>
+                </div>
+              <?php endforeach; ?>
+            <?php else: ?>
+              <p>Seja o primeiro a comentar!</p>
+            <?php endif; ?>
+          </div>
+        </div>
+      <?php  }  ?>
 
 
     </div>

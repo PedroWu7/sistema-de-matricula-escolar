@@ -47,6 +47,21 @@ class HomeController {
     }
 
     static function ver() {
+        if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["comentario"])) {
+            $pagina = $_GET['p'] ?? null;
+            $url = explode('/', $pagina);
+    
+            $curso_id = intval($url[2] ?? 0);
+            $autor = $_SESSION["usuario"];
+            $texto = trim($_POST["comentario"]);
+    
+            if (!empty($texto)) {
+                echo "asa";
+                Comentario::salvar($curso_id, $autor, $texto);
+
+                exit;
+            }
+        }
         include __DIR__ . "/../View/curso.php";
     }
 
