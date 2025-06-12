@@ -32,11 +32,13 @@ class UsuarioController{
             $criarUsuario = $_POST["criarUsuario"];
             $criarSenha = $_POST["criarSenha"];
             $criarNome = $_POST["criarNome"];
+            $criarDataNasc = $_POST["criarDataNasc"];
+            $criarCPF = $_POST["criarCPF"];
             $existe = Usuario::existe($criarUsuario, $criarSenha);
             if($existe){ ?>
                 <p>Usuário ou senha incorretos.</p>
             <?php } else { 
-                Usuario::adicionar($criarNome, $criarUsuario, $criarSenha);
+                Usuario::adicionar($criarNome, $criarUsuario, $criarSenha, $criarDataNasc, $criarCPF);
              }
 
 
@@ -69,7 +71,7 @@ class UsuarioController{
 
         $novos_cursos = $curso_alunos . $idCurso;
 
-        $sql2 = "UPDATE `alunos` SET `cursos_matriculados` = '$novos_cursos;' WHERE `alunos`.`id` = $idUsuario;";
+        $sql2 = "UPDATE 'alunos' SET 'cursos_matriculados' = '$novos_cursos;' WHERE 'alunos'.'id' = $idUsuario;";
         $resp = Banco::Conn()->query($sql2);
     }
 
@@ -101,16 +103,49 @@ class UsuarioController{
                 }
             }
     
-            // Etapa 2: Verifica o CPF
-            if (isset($_POST["inputCpf"]) && isset($_SESSION["usuario_recuperacao"])) {
+            // Etapa 2: Verifica o CPF e data de nascimento
+            if (isset($_POST["inputCpf"]) && isset($_POST["inputNascimento"])) {
                 $inputCpf = $_POST["inputCpf"];
+                $inputNasc = $_POST["inputNascimento"];
                 $usuario = $_SESSION["usuario_recuperacao"];
-                $recuperar = true;
-                include __DIR__ . "/../View/recuperar_nova.html";
-                return;
+
+                $sql = "SELECT * FROM alunos WHERE cpf = '$inputCpf'";
+                $result = Banco::Conn()->query($sql);
+
+                if ($result->num_rows > 0) {
+                    $sql = "SELECT * FROM alunos WHERE data_nasc = '$inputNasc'";
+                    $result = Banco::Conn()->query($sql);
+                    if ($result->num_rows > 0) {
+                        $recuperar = true;
+                        include __DIR__ . "/../View/recuperar_nova.html";
+                        return;
+                    }else{
+                        echo "<p>data de nascimento não condiz com data cadastrada<p>";
+                        include __DIR__ . "/../View/recuperar_cpf.html";
+                        return;
+                    }
+                } else{ 
+                    echo "<p>cpf não condiz com cpf cadastrado</p>";
+                    include __DIR__ . "/../View/recuperar_cpf.html";
+                    return;
+                }
             }
 
+        
+
+            
+
             if(isset($_POST["inputSenha"])){
+                $senha = $_POST["inputSenha"];
+                $inputUsuario = $_SESSION["usuario_recuperacao"];
+                $hash_armazenado = password_hash($senha, PASSWORD_DEFAULT);
+                $conn = Banco::Conn();
+                $stmt = $conn->prepare("UPDATE alunos SET senha = ? WHERE usuario = ?");
+                $stmt->bind_param("ss", $hash_armazenado, $inputUsuario);
+                $stmt->execute();
+                //echo "$inputUsuario";
+                //echo "$hash_armazenado";
+                //echo "$senha";
                 $_SESSION["mensagem_alerta"] = "Senha alterada com sucesso!";
                 header("location: ./index");
                 return;

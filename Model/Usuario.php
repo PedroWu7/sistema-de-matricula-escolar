@@ -30,13 +30,13 @@
             return false;
         }
 
-        static function adicionar($nome, $usuario, $senha) {
+        static function adicionar($nome, $usuario, $senha, $dataNasc, $cpf) {
             $hash_armazenado = password_hash($senha, PASSWORD_DEFAULT);
             
             if ($hash_armazenado) {
                 $conn = Banco::Conn();
-                $stmt = $conn->prepare("INSERT INTO alunos (nome, usuario, senha, nivel_acesso, cursos_matriculados) VALUES (?, ?, ?, 'aluno', NULL)");
-                $stmt->bind_param("sss", $nome, $usuario, $hash_armazenado);
+                $stmt = $conn->prepare("INSERT INTO alunos (nome, usuario, senha, nivel_acesso, cursos_matriculados, cpf, data_nasc) VALUES (?, ?, ?, 'aluno', NULL, ?, ?)");
+                $stmt->bind_param("sssss", $nome, $usuario, $hash_armazenado, $cpf, $dataNasc);
         
                 if ($stmt->execute()) {
                     echo "Usuário criado com sucesso!";
@@ -47,5 +47,6 @@
                 echo "Erro ao gerar o hash da senha.";
             }
         }
+
     } 
 ?>
