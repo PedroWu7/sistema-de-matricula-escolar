@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3307
--- Tempo de geração: 09-Jun-2025 às 16:23
--- Versão do servidor: 10.4.21-MariaDB
--- versão do PHP: 8.0.12
+-- Host: 127.0.0.1
+-- Tempo de geração: 12/06/2025 às 22:06
+-- Versão do servidor: 10.4.32-MariaDB
+-- Versão do PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `comentarios`
+-- Estrutura para tabela `comentarios`
 --
 
 CREATE TABLE `comentarios` (
@@ -32,28 +32,37 @@ CREATE TABLE `comentarios` (
   `curso_id` int(11) NOT NULL,
   `autor` varchar(100) NOT NULL,
   `texto` text NOT NULL,
-  `data` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `horario` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `comentarios`
+--
+
+INSERT INTO `comentarios` (`id`, `curso_id`, `autor`, `texto`, `horario`) VALUES
+(1, 2, 'teste', 'oi', '2025-06-12 16:19:11'),
+(2, 2, 'teste', 'dsa', '2025-06-12 16:53:58'),
+(3, 2, 'teste', 'dsa', '2025-06-12 16:54:21');
 
 --
 -- Índices para tabelas despejadas
 --
 
 --
--- Índices para tabela `comentarios`
+-- Índices de tabela `comentarios`
 --
 ALTER TABLE `comentarios`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT de tabelas despejadas
+-- AUTO_INCREMENT para tabelas despejadas
 --
 
 --
 -- AUTO_INCREMENT de tabela `comentarios`
 --
 ALTER TABLE `comentarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -5,7 +5,6 @@ require_once __DIR__ . "/CursoController.php";
 class ComentarioController{
     static function salvar(){
         if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["comentario"])) {
-            echo "dasd";
             $pagina = $_GET['p'] ?? null;
             $url = explode('/', $pagina);
     
@@ -18,21 +17,22 @@ class ComentarioController{
                 Comentario::salvar($curso_id, $autor, $texto);
 
                 exit;
+            }else{
+                echo "Nada a ser enviado";
             }
         }
     
     }
     public static function listarPorCurso($curso_id) {
-        $conn = Banco::Conn(); // conexão do seu sistema
-        $curso_id = intval($curso_id); // segurança básica
+        $conn = Banco::Conn(); 
+        $curso_id = intval($curso_id); 
     
-        $sql = "SELECT * FROM comentarios WHERE curso_id = $curso_id ORDER BY 'data' DESC";
+        $sql = "SELECT * FROM comentarios WHERE curso_id = $curso_id ORDER BY horario DESC";
         $resultado = $conn->query($sql);
     
         $comentarios = [];
-    
-        if ($resultado && $resultado->num_rows > 0) {
-            while ($row = $resultado->fetch_assoc()) {
+        if ($result && $result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
                 $comentarios[] = $row;
             }
         }

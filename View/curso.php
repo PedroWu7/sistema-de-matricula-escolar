@@ -239,8 +239,7 @@
     $curso = CursoController::ver();
     $comentarios = Comentario::listarPorCurso($curso['id']);
     ?>
-      $curso = CursoController::ver();
-    ?>
+
     <section class="course-hero">
       <!-- <p class="category"><?= htmlspecialchars($curso['categoria']) ?></p> -->
       <h1><?= htmlspecialchars($curso['nome']) ?></h1>
@@ -303,7 +302,6 @@
         <div class="comments-section">
           <h2>Comentários</h2>
 
-          <!-- Formulário para adicionar um novo comentário -->
           <form method="POST">
             <textarea name="comentario" rows="4" placeholder="Escreva seu comentário aqui..." required></textarea>
             <br>
@@ -312,7 +310,6 @@
 
           <hr>
 
-          <!-- Lista de comentários existentes -->
           <div class="comments-list">
             <?php if (!empty($comentarios)): ?>
               <?php foreach ($comentarios as $comentario): ?>

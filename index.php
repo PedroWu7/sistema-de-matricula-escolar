@@ -11,7 +11,7 @@
     require_once "Controller/UsuarioController.php";
     require_once "Controller/CursoController.php";
     require_once "Controller/ComentarioController.php";
-    require_once "Controller/AlunoController.php";
+
 
     match($url[0]){
         "cadastrar" => UsuarioController::cadastrar(),
