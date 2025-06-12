@@ -39,13 +39,16 @@ class ComentarioController{
     
         return $comentarios;
     }
-    
+    public static function excluirComentario($comentario_id) {
+        $conn = Banco::Conn(); 
+        $sql = "DELETE FROM comentarios WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $comentario_id);
+        $stmt->execute();
+        header("Location:curso");
+
+        exit; 
+    }
 }
-
-
-
-
-
-
 
 ?>

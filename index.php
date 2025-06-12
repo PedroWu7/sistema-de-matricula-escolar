@@ -11,6 +11,7 @@
     require_once "Controller/UsuarioController.php";
     require_once "Controller/CursoController.php";
     require_once "Controller/ComentarioController.php";
+    require_once "Controller/AlunoController.php";
 
     match($url[0]){
         "cadastrar" => UsuarioController::cadastrar(),
@@ -25,7 +26,10 @@
         "meus-cursos" => HomeController::meusCursos(),
         "recuperar-senha" => UsuarioController::recuperarSenha(),
         "comentario"=> ComentarioController::salvar(),
-
+        "aluno-listar" => AlunoController::listar(),
+        "aluno-cadastrar" => AlunoController::cadastrar(),
+        "aluno-editar" => AlunoController::editar($url[2]),
+        "aluno-excluir" => AlunoController::excluir($url[2]),
         default => HomeController::index()
     }
 
