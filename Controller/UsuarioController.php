@@ -48,10 +48,6 @@ class UsuarioController{
 
     }
 
-    static function esqueciSenha(){
-        include __DIR__ . "/../View/esqueciSenha.php";
-    }
-
     static function matricular($idUsuario, $idCurso){
         if($_SESSION["nivel_acesso"] !== "aluno"){
             $_SESSION["mensagem_alerta"] = "Se cadastre para se inscrever em algum curso.";
@@ -71,7 +67,7 @@ class UsuarioController{
 
         $novos_cursos = $curso_alunos . $idCurso;
 
-        $sql2 = "UPDATE 'alunos' SET 'cursos_matriculados' = '$novos_cursos;' WHERE 'alunos'.'id' = $idUsuario;";
+        $sql2 = "UPDATE alunos SET cursos_matriculados = '$novos_cursos' WHERE id = $idUsuario";
         $resp = Banco::Conn()->query($sql2);
     }
 
@@ -120,20 +116,16 @@ class UsuarioController{
                         include __DIR__ . "/../View/recuperar_nova.html";
                         return;
                     }else{
-                        echo "<p>data de nascimento não condiz com data cadastrada<p>";
+                        echo "<p>Data de nascimento incorreta.<p>";
                         include __DIR__ . "/../View/recuperar_cpf.html";
                         return;
                     }
                 } else{ 
-                    echo "<p>cpf não condiz com cpf cadastrado</p>";
+                    echo "<p>Cpf incorreto.</p>";
                     include __DIR__ . "/../View/recuperar_cpf.html";
                     return;
                 }
             }
-
-        
-
-            
 
             if(isset($_POST["inputSenha"])){
                 $senha = $_POST["inputSenha"];

@@ -219,7 +219,7 @@
         </div>
         <div class="header-actions">
           <a class="btn btn-outline" href="meus-cursos">Meus Cursos</a>
-          <a class="btn btn-fill" href="logout">Sair</a>
+          <a class="btn btn-fill" href="./../logout">Sair</a>
         </div>
       </div>
     </header>

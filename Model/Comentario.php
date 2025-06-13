@@ -10,7 +10,7 @@
         public static function listarPorCurso($curso_id) {
           $sql = "SELECT * FROM comentarios WHERE curso_id = $curso_id ORDER BY horario DESC";
           $resp = Banco::Conn()->query($sql); 
-
+          return $resp;
         }
       }
       

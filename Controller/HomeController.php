@@ -57,9 +57,6 @@ class HomeController {
     
             if (!empty($texto)) {
                 Comentario::salvar($curso_id, $autor, $texto);
-                
-
-                exit;
             }
         }
         include __DIR__ . "/../View/curso.php";

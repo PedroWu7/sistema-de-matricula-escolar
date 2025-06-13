@@ -25,7 +25,6 @@
         "ver" => HomeController::ver($url[2]),
         "meus-cursos" => HomeController::meusCursos(),
         "recuperar-senha" => UsuarioController::recuperarSenha(),
-        "comentario"=> ComentarioController::salvar(),
         "aluno-listar" => AlunoController::listar(),
         "aluno-cadastrar" => AlunoController::cadastrar(),
         "aluno-editar" => AlunoController::editar($url[2]),
