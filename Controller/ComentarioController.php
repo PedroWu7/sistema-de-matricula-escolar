@@ -1,7 +1,9 @@
 <?php
 require_once __DIR__ . "/../Model/Comentario.php";
 require_once __DIR__ . "/CursoController.php";
-
+if (session_status() === PHP_SESSION_NONE) {
+      session_start();
+}
 class ComentarioController{
     public static function listarPorCurso() {
         $conn = Banco::Conn(); 
@@ -17,14 +19,10 @@ class ComentarioController{
     }
     public static function excluirComentario($comentario_id) {
         $conn = Banco::Conn(); 
-        $sql = "DELETE FROM comentarios WHERE id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $comentario_id);
-        $stmt->execute();
-        header("Location:curso");
-
+        $sql = "DELETE FROM comentarios WHERE id = $comentario_id";
+        $resp = $conn->query($sql);
+        header("Location: ./../curso");
         exit; 
     }
 }
-
 ?>

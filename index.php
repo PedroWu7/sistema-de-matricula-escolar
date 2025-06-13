@@ -19,6 +19,7 @@
         "logout" => HomeController::logout(),
         "atualizar" => CursoController::atualizar($url[2]),
         "excluir" => CursoController::excluir($url[2]),
+        "excluir-comentario" => ComentarioController::excluirComentario($url[1]),
         "adicionar" => CursoController::adicionar(),
         "participar" => CursoController::participar($url[2]),
         "gerenciar" => HomeController::gerenciar(),
@@ -29,6 +30,7 @@
         "aluno-cadastrar" => AlunoController::cadastrar(),
         "aluno-editar" => AlunoController::editar($url[2]),
         "aluno-excluir" => AlunoController::excluir($url[2]),
+        "sobre" => HomeController::sobre(),
         default => HomeController::index()
     }
 

@@ -360,6 +360,7 @@
     require_once __DIR__ . "/../Controller/ComentarioController.php";
     require_once __DIR__ . "/../Model/Comentario.php";
     $curso = CursoController::ver();
+    $_SESSION["curso"] = $curso;
     ?>
 
     <section class="course-hero">
@@ -426,7 +427,7 @@
                       <p class="comment-author"><?= htmlspecialchars($comentario[2]) ?></p>
                       
                       <?php if (($_SESSION['nivel_acesso'] ?? '') !== 'visitante') { ?>
-                        <a href="../../excluir/comentario/<?= $comentario[0] ?>" 
+                        <a href="../../excluir-comentario/<?= $comentario[0] ?>" 
                            class="comment-delete-btn" 
                            title="Excluir comentário" 
                            onclick="return confirm('Tem certeza de que deseja excluir este comentário?');">

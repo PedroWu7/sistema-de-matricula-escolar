@@ -220,6 +220,7 @@
         <div class="header-actions">
           <?php if(isset($_SESSION["usuario"]) && $_SESSION["usuario"] !== "" && $_SESSION["usuario"] !== "Guest") { ?>
             <a class="btn btn-outline" href="meus-cursos">Meus Cursos</a>
+            <a class="btn btn-outline" href="sobre">Sobre</a>
             <a class="btn btn-fill" href="logout">Sair</a>
           <?php } else { ?>
             <a class="btn btn-outline" href="login">Login</a>

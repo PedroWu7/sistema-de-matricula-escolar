@@ -71,5 +71,9 @@ class HomeController {
 
         include __DIR__ . "/../View/meus_cursos.php";
     }
+
+    static function sobre(){
+        include __DIR__ . "/../View/sobre.html";
+    }
 }
 ?>
