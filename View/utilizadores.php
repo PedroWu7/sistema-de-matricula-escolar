@@ -218,7 +218,7 @@
           <p>Utilizador: <span><?= htmlspecialchars($_SESSION["usuario"] ?? 'Convidado') ?></span> | Nível: <span><?= htmlspecialchars($_SESSION["nivel_acesso"] ?? 'Visitante') ?></span></p>
         </div>
         <div class="header-actions">
-          <a class="btn btn-outline" href="meus-cursos">Meus Cursos</a>
+          <a class="btn btn-outline" href="./../meus-cursos">Meus Cursos</a>
           <a class="btn btn-fill" href="./../logout">Sair</a>
         </div>
       </div>

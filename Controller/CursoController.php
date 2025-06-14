@@ -112,20 +112,18 @@
             if (isset($url[2])) {
                 $id = intval($url[2]);
                 if(Curso::existe($id)[0]){
-                    $status = Curso::participar($id, $_SESSION["usuario"]);
-                    if($status === "inscrito"){
-                        $_SESSION['mensagem_alerta'] = "Você já está inscrito neste curso.";
-                    } else {
-                        $_SESSION['mensagem_alerta'] = "Parabéns! Você se inscreveu no curso.";
-                    }
+                    Curso::participar($id, $_SESSION["usuario"]);
                     UsuarioController::matricular($_SESSION["id"], $id);
                 } else {
                     echo "ID não encontrado.";
                     exit;
                 }
             }
-            header("Location: ./../");
-            exit;
+            // Obtém o URL da página anterior ou define uma página padrão (ex: 'index.php')
+            $url_anterior = $_SERVER['HTTP_REFERER'] ?? 'index.php'; 
+
+            header("Location: " . $url_anterior);
+            exit(); // É crucial chamar exit() após um redirecionamento para parar a execução do script.
         }
 
         static function usuarioInscritoCurso($idCurso, $nomeUsuario){
@@ -146,7 +144,11 @@
                 echo $novos_alunos;
                 $sql2 = "UPDATE `cursos` SET `alunos` = '$novos_alunos' WHERE `cursos`.`id` = $idCurso;";
                 Banco::Conn()->query($sql2);
-                header("location: ./../../ver/curso/" . $idCurso);
+                // Obtém o URL da página anterior ou define uma página padrão (ex: 'index.php')
+                $url_anterior = $_SERVER['HTTP_REFERER'] ?? 'index.php'; 
+
+                header("Location: " . $url_anterior);
+                exit(); // É crucial chamar exit() após um redirecionamento para parar a execução do script.
             } else {
                 echo "Vc não está matriculado nesse curso.";
             }
