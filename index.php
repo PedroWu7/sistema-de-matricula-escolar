@@ -16,17 +16,22 @@
     match($url[0]){
         "cadastrar" => UsuarioController::cadastrar(),
         "login" => UsuarioController::login(),
+        "recuperar-senha" => UsuarioController::recuperarSenha(),
+
         "logout" => HomeController::logout(),
-        "atualizar" => CursoController::atualizar($url[2]),
-        "excluir" => HomeController::excluir($url),
-        "adicionar" => CursoController::adicionar(),
-        "participar" => CursoController::participar($url[2]),
+        "excluir" => HomeController::excluir($url),        
         "gerenciar" => HomeController::gerenciar($url),
         "ver" => HomeController::ver($url[2]),
         "meus-cursos" => HomeController::meusCursos(),
-        "recuperar-senha" => UsuarioController::recuperarSenha(),
         "sobre" => HomeController::sobre(),
         "sair" => HomeController::sair($url),
+
+
+        "adicionar" => CursoController::adicionar(),
+        "atualizar" => CursoController::atualizar($url[2]);
+        "participar" => CursoController::participar($url[2]),
+
+
         default => HomeController::index()
     }
 ?>
