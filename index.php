@@ -18,19 +18,14 @@
         "login" => UsuarioController::login(),
         "logout" => HomeController::logout(),
         "atualizar" => CursoController::atualizar($url[2]),
-        "excluir" => CursoController::excluir($url[2]),
-        "excluir-comentario" => ComentarioController::excluirComentario($url[1]),
+        "excluir" => HomeController::excluir($url),
         "adicionar" => CursoController::adicionar(),
         "participar" => CursoController::participar($url[2]),
-        "gerenciar" => HomeController::gerenciar(),
+        "gerenciar" => HomeController::gerenciar($url),
         "ver" => HomeController::ver($url[2]),
         "meus-cursos" => HomeController::meusCursos(),
         "recuperar-senha" => UsuarioController::recuperarSenha(),
-        "gerenciar-remover-utilizador" => UsuarioController::excluir($url[1]),
-        "gerenciar-editar-utilizador" => UsuarioController::editar($url[1]),
         "sobre" => HomeController::sobre(),
         default => HomeController::index()
     }
-
-
 ?>

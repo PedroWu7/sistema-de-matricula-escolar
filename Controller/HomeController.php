@@ -36,14 +36,21 @@ class HomeController {
         exit;
     }
 
-    static function gerenciar() {
+    static function gerenciar($url) {
         if (!isset($_SESSION["nivel_acesso"]) || $_SESSION["nivel_acesso"] !== "administrador") {
             $_SESSION["mensagem_alerta"] = "Você não tem acesso a essa página.";
             header("Location: ../");
             exit;
+        }  
+        if($url[1] === "usuarios"){
+            include __DIR__ . "/../View/utilizadores.php";
         }
-
-        include __DIR__ . "/../View/utilizadores.php";
+        if($url[1] === "remover"){
+            UsuarioController::excluir($url[3]);
+        }
+        if($url[1] === "editar"){
+            UsuarioController::editar($url[3]);
+        }  
     }
 
     static function ver() {
@@ -74,6 +81,15 @@ class HomeController {
 
     static function sobre(){
         include __DIR__ . "/../View/sobre.html";
+    }
+
+    static function excluir($url) {
+        if($url[1] === "curso"){
+            CursoController::excluir($url[2]);
+        }
+        if($url[1] === "comentario"){
+            ComentarioController::excluirComentario($url[2]);
+        }
     }
 }
 ?>

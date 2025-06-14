@@ -135,7 +135,7 @@
         <?php
           $pagina = $_GET['p'] ?? null;
           $url = explode('/', $pagina);
-          $aluno_id = intval($url[1] ?? 0);
+          $aluno_id = intval($url[3] ?? 0);
           $utilizador = UsuarioController::pegarPorId($aluno_id);
         ?>
         <form method="post" action="">
@@ -179,7 +179,7 @@
             <button type="submit" class="btn btn-fill">Atualizar Utilizador</button>
 
             <div class="links-footer">
-                <a href="./../gerenciar/usuarios">Voltar à Gestão</a>
+                <a href="./../../../gerenciar/usuarios">Voltar à Gestão</a>
             </div>
         </form>
     </div>

@@ -153,7 +153,7 @@ class UsuarioController{
         $sql = "DELETE FROM alunos WHERE id=?";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$id]);
-        header("location: ./../gerenciar/utilizadores");
+        header("location: ./../../../gerenciar/usuarios");
         exit;
     }
 
@@ -172,7 +172,7 @@ class UsuarioController{
             $sql = "UPDATE `alunos` SET `nome` = '$nome', `usuario` = '$usuario', `nivel_acesso` = '$nivel_acesso', `cursos_matriculados` = '$cursos_matriculados', `cpf` = '$cpf', `data_nasc` = '$data_nasc' WHERE `alunos`.`id` = $id;";
 
             $conn->query($sql);
-            header("location: ./../gerenciar/utilizadores");
+            header("location: ./../../../gerenciar/usuarios");
         }
         
         include __DIR__ . "/../View/editar_utilizador.php";

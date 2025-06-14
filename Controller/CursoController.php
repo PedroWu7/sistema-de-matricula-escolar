@@ -80,6 +80,27 @@
             exit;
         }
 
+        static function ver(){
+            $pagina = $_GET['p'] ?? null;
+            $url = explode('/', $pagina);
+            if (isset($url[2])) {
+                $id = intval($url[2]);
+                if(Curso::existe($id)[0]){
+                    $curso = Curso::ver($id);
+                } else {
+                    echo "ID não encontrado.";
+                    exit;
+                }
+            }
+
+            return $curso;
+            header("Location: ./../");
+        }
+
+        static function listarMeus(){
+            return Curso::listarMeus($_SESSION["usuario"]);
+        }
+
         static function participar($id){
             if($_SESSION["nivel_acesso"] !== "aluno"){
                 $_SESSION["mensagem_alerta"] = "Se cadastre para se inscrever em algum curso.";
@@ -106,27 +127,6 @@
 
             header("Location: ./../");
             exit;
-        }
-
-        static function ver(){
-            $pagina = $_GET['p'] ?? null;
-            $url = explode('/', $pagina);
-            if (isset($url[2])) {
-                $id = intval($url[2]);
-                if(Curso::existe($id)[0]){
-                    $curso = Curso::ver($id);
-                } else {
-                    echo "ID não encontrado.";
-                    exit;
-                }
-            }
-
-            return $curso;
-            header("Location: ./../");
-        }
-
-        static function listarMeus(){
-            return Curso::listarMeus($_SESSION["usuario"]);
         }
     }
 ?>

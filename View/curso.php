@@ -426,7 +426,7 @@
                       <p class="comment-author"><?= htmlspecialchars($comentario[2]) ?></p>
                       
                       <?php if (($_SESSION['nivel_acesso'] ?? '') !== 'visitante') { ?>
-                        <a href="../../excluir-comentario/<?= $comentario[0] ?>" 
+                        <a href="../../excluir/comentario/<?= $comentario[0] ?>" 
                            class="comment-delete-btn" 
                            title="Excluir comentário" 
                            onclick="return confirm('Tem certeza de que deseja excluir este comentário?');">

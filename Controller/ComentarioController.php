@@ -21,7 +21,8 @@ class ComentarioController{
         $conn = Banco::Conn(); 
         $sql = "DELETE FROM comentarios WHERE id = $comentario_id";
         $resp = $conn->query($sql);
-        header("Location: ./../curso");
+        $curso_id = $_SESSION["curso"]["id"];
+        header("Location: ./../../ver/curso/$curso_id");
         exit; 
     }
 }
