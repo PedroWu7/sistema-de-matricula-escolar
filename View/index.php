@@ -218,14 +218,7 @@
           <p>Utilizador: <span><?= htmlspecialchars($_SESSION["usuario"] ?? 'Convidado') ?></span> | Nível: <span><?= htmlspecialchars($_SESSION["nivel_acesso"] ?? 'Visitante') ?></span></p>
         </div>
         <div class="header-actions">
-          <?php if(isset($_SESSION["usuario"]) && $_SESSION["usuario"] !== "" && $_SESSION["usuario"] !== "Guest") { ?>
-            <a class="btn btn-outline" href="meus-cursos">Meus Cursos</a>
-            <a class="btn btn-outline" href="sobre">Sobre</a>
-            <a class="btn btn-fill" href="logout">Sair</a>
-          <?php } else { ?>
-            <a class="btn btn-outline" href="login">Login</a>
-            <a class="btn btn-fill" href="cadastrar">Criar Conta</a>
-          <?php } ?>
+          <?php include __DIR__ . "/templates/header.php"; ?>
         </div>
       </div>
     </header>

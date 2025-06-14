@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cadastre-se</title>
+  <title>Editar Utilizador</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -39,7 +39,7 @@
 
     .form-container {
       width: 100%;
-      max-width: 420px;
+      max-width: 500px;
       padding: 2.5rem;
       background-color: var(--card-bg-color);
       border-radius: var(--border-radius);
@@ -67,7 +67,9 @@
       margin-bottom: 0.5rem;
     }
     
-    .form-group input {
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
       width: 100%;
       padding: 0.75rem;
       border: 1px solid var(--border-color);
@@ -78,8 +80,15 @@
       font-family: 'Inter', sans-serif;
       transition: border-color 0.2s, box-shadow 0.2s;
     }
+    
+    .form-group textarea {
+        min-height: 100px;
+        resize: vertical;
+    }
 
-    .form-group input:focus {
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
       outline: none;
       border-color: var(--primary-color);
       box-shadow: 0 0 0 3px rgba(128, 90, 213, 0.25);
@@ -104,14 +113,13 @@
     .links-footer {
       text-align: center;
       margin-top: 1.5rem;
-      font-size: 0.9rem;
-      color: var(--light-text);
     }
     
     .links-footer a {
       color: var(--primary-color);
+      font-size: 0.9rem;
       text-decoration: none;
-      font-weight: 600;
+      font-weight: 500;
       transition: color 0.2s;
     }
     
@@ -123,40 +131,55 @@
   </style>
 </head>
 <body>
-    <div class="header-actions">
-    </div>
     <div class="form-container">
-        <form method="post" action="" id="formCadastro" name="formCadastro">
-            <h1>Cadastre-se</h1>
-            <div class="form-group">
-                <label for="criarNome">Nome</label>
-                <input type="text" id="criarNome" name="criarNome" required>
-            </div>
+        <?php
+          $pagina = $_GET['p'] ?? null;
+          $url = explode('/', $pagina);
+          $aluno_id = intval($url[1] ?? 0);
+          $utilizador = UsuarioController::pegarPorId($aluno_id);
+        ?>
+        <form method="post" action="">
+            <h1>Editar Utilizador</h1>
+            
+            <input type="hidden" name="id" value="<?= htmlspecialchars($utilizador['id'] ?? '') ?>">
             
             <div class="form-group">
-                <label for="criarUsuario">Utilizador</label>
-                <input type="text" id="criarUsuario" name="criarUsuario" required>
+                <label for="nome">Nome Completo</label>
+                <input type="text" id="nome" name="nome" value="<?= htmlspecialchars($utilizador['nome'] ?? '') ?>" required>
             </div>
 
             <div class="form-group">
-                <label for="criarCPF">CPF</label>
-                <input type="text" id="criarCPF" name="criarCPF" maxlength="14" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" placeholder="000.000.000-00" required>
+                <label for="usuario">Nome de Utilizador</label>
+                <input type="text" id="usuario" name="usuario" value="<?= htmlspecialchars($utilizador['usuario'] ?? '') ?>" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="cpf">CPF</label>
+                <input type="text" id="cpf" name="cpf" value="<?= htmlspecialchars($utilizador['cpf'] ?? '') ?>">
             </div>
 
             <div class="form-group">
-                <label for="criarDataNasc">Data de Nascimento</label>
-                <input type="date" id="criarDataNasc" name="criarDataNasc" required>
+                <label for="data_nasc">Data de Nascimento</label>
+                <input type="date" id="data_nasc" name="data_nasc" value="<?= htmlspecialchars($utilizador['data_nasc'] ?? '') ?>">
             </div>
-            
+
             <div class="form-group">
-                <label for="criarSenha">Senha</label>
-                <input type="password" id="criarSenha" name="criarSenha" required>
+                <label for="nivel_acesso">Nível de Acesso</label>
+                <select id="nivel_acesso" name="nivel_acesso" required>
+                    <option value="aluno" <?= (($utilizador['nivel_acesso'] ?? '') == 'aluno') ? 'selected' : '' ?>>Aluno</option>
+                    <option value="administrador" <?= (($utilizador['nivel_acesso'] ?? '') == 'administrador') ? 'selected' : '' ?>>Administrador</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="cursos_matriculados">Cursos Matriculados (IDs separados por ;)</label>
+                <textarea id="cursos_matriculados" name="cursos_matriculados"><?= htmlspecialchars($utilizador['cursos_matriculados'] ?? '') ?></textarea>
             </div>
             
-            <button type="submit" class="btn btn-fill">Criar Conta</button>
-            
+            <button type="submit" class="btn btn-fill">Atualizar Utilizador</button>
+
             <div class="links-footer">
-                Já tem uma conta? <a href="../sistema-de-matricula-escolar/login">Entrar</a>
+                <a href="./../gerenciar/usuarios">Voltar à Gestão</a>
             </div>
         </form>
     </div>

@@ -148,6 +148,42 @@ class UsuarioController{
         include __DIR__ . "/../View/recuperar_senha.html";
     }
     
+    public static function excluir($id) {
+        $pdo = Banco::conn();
+        $sql = "DELETE FROM alunos WHERE id=?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$id]);
+        header("location: ./../gerenciar/utilizadores");
+        exit;
+    }
+
+    public static function editar($id) {
+
+        if($_SERVER["REQUEST_METHOD"] === "POST"){
+            $aluno = [$_POST["nome"], $_POST["usuario"], $_POST["nivel_acesso"], $_POST["cursos_matriculados"], $_POST["cpf"], $_POST["data_nasc"]];
+            $nome = $aluno[0];
+            $usuario = $aluno[1];
+            $nivel_acesso = $aluno[2];
+            $cursos_matriculados = $aluno[3];
+            $cpf = $aluno[4];
+            $data_nasc = $aluno[5];
+            $conn = Banco::Conn();
+
+            $sql = "UPDATE `alunos` SET `nome` = '$nome', `usuario` = '$usuario', `nivel_acesso` = '$nivel_acesso', `cursos_matriculados` = '$cursos_matriculados', `cpf` = '$cpf', `data_nasc` = '$data_nasc' WHERE `alunos`.`id` = $id;";
+
+            $conn->query($sql);
+            header("location: ./../gerenciar/utilizadores");
+        }
+        
+        include __DIR__ . "/../View/editar_utilizador.php";
+    }
+
+    static function pegarPorId($id){
+        $sql = "SELECT * FROM alunos WHERE id = '$id';";
+        $resp = Banco::Conn()->query($sql);
+        $aluno = $resp->fetch_assoc();
+        return $aluno;
+    }
 }
 
 ?>

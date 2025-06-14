@@ -26,10 +26,8 @@
         "ver" => HomeController::ver($url[2]),
         "meus-cursos" => HomeController::meusCursos(),
         "recuperar-senha" => UsuarioController::recuperarSenha(),
-        "aluno-listar" => AlunoController::listar(),
-        "aluno-cadastrar" => AlunoController::cadastrar(),
-        "aluno-editar" => AlunoController::editar($url[2]),
-        "aluno-excluir" => AlunoController::excluir($url[2]),
+        "gerenciar-remover-utilizador" => UsuarioController::excluir($url[1]),
+        "gerenciar-editar-utilizador" => UsuarioController::editar($url[1]),
         "sobre" => HomeController::sobre(),
         default => HomeController::index()
     }
