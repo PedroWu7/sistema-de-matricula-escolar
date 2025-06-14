@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "/../utils/csrf.php";
+require_once __DIR__ . "/../Utils/csrf.php";
 ?>
 
 <!DOCTYPE html>

@@ -1,3 +1,8 @@
+<?php
+require_once __DIR__ . "/../Utils/csrf.php";
+?>
+
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -176,6 +181,8 @@
                 <textarea id="cursos_matriculados" name="cursos_matriculados"><?= htmlspecialchars($utilizador['cursos_matriculados'] ?? '') ?></textarea>
             </div>
             
+            <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
+
             <button type="submit" class="btn btn-fill">Atualizar Utilizador</button>
 
             <div class="links-footer">

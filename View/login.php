@@ -1,9 +1,14 @@
+<?php
+require_once __DIR__ . "/../Utils/csrf.php";
+?>
+
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Recuperar senha</title>
+  <title>Login</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -132,30 +137,26 @@
 <body>
     <div class="login-container">
         <form method="post" action="" id="formLogin" name="formLogin">
-            <h1>Recuperar senha</h1>
-            <p>Por favor, informe o CPF e a data de nascimento.</p>
-            <br>
+            <h1>Login</h1>
             <div class="form-group">
-                <label for="inputCpf">CPF</label>
-                <input type="text" id="inputCpf" name="inputCpf" maxlength="14" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" placeholder="000.000.000-00" required>
-            </div>
-            <div class="form-group">
-                <label for="inputNascimento">Data de Nascimento</label>
-                <input type="date" id="inputNascimento" name="inputNascimento" required>
+                <label for="inputUsuario">Utilizador</label>
+                <input type="text" id="inputUsuario" name="inputUsuario" required>
             </div>
             
-            <button type="submit" class="btn btn-fill">Recuperar</button>
-            <button type="button" class="btn btn-outline" onclick="window.location.href='verificar'">Voltar</button>
+            <div class="form-group">
+                <label for="inputSenha">Senha</label>
+                <input type="password" id="inputSenha" name="inputSenha" required>
+            </div>
+            
+            <button type="submit" class="btn btn-fill">Logar</button>
+            <button type="button" class="btn btn-outline" onclick="window.location.href='cadastrar'">Criar Conta</button>
+
+            <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
+            
+            <div class="links-footer">
+                <a href="recuperar-senha">Esqueceu a senha?</a>
+            </div>
         </form>
     </div>
 </body>
 </html>
-
-
-
-
-
-
-
-
-

@@ -1,3 +1,7 @@
+<?php
+require_once __DIR__ . "/../../Utils/csrf.php";
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -137,6 +141,8 @@
                 <label for="inputUsuario">Utilizador</label>
                 <input type="text" id="inputUsuario" name="inputUsuario" required>
             </div>
+            
+            <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
             
             <button type="submit" class="btn btn-fill">Recuperar</button>
             <button type="button" class="btn btn-outline" onclick="window.location.href='login'">Voltar</button>

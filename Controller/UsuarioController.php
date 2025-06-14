@@ -6,6 +6,11 @@
         static function login(){
 
             if ($_SERVER["REQUEST_METHOD"] === "POST"){
+                if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+                    die("Erro: token CSRF inválido.");
+                }
+
+
                 $inputUsuario = $_POST["inputUsuario"];
                 $inputSenha = $_POST["inputSenha"];
 
@@ -21,13 +26,18 @@
                     <p>Usuário ou senha incorretos.</p>
                 <?php }
             }
-            include __DIR__ . "/../View/login.html";
+            include __DIR__ . "/../View/login.php";
 
             
         }
 
         static function cadastrar(){
             if ($_SERVER["REQUEST_METHOD"] === "POST"){
+
+                if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+                die('Erro: token CSRF inválido.');
+                }
+
                 $criarUsuario = $_POST["criarUsuario"];
                 $criarSenha = $_POST["criarSenha"];
                 $criarNome = $_POST["criarNome"];
@@ -79,6 +89,10 @@
 
         static function recuperarSenha() {
             if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+                if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+                    die("Erro: token CSRF inválido.");
+                }
         
                 // Etapa 1: Verifica o usuário
                 if (isset($_POST["inputUsuario"])) {
@@ -89,11 +103,11 @@
                     if ($result->num_rows > 0) {
                         // Salva o usuário temporariamente na sessão
                         $_SESSION["usuario_recuperacao"] = $inputUsuario;
-                        include __DIR__ . "/../View/recuperar_senha/recuperar_cpf.html";
+                        include __DIR__ . "/../View/recuperar_senha/recuperar_cpf.php";
                         return;
                     } else {
                         echo "<p>Usuário não encontrado.</p>";
-                        include __DIR__ . "/../View/recuperar_senha/recuperar_senha.html";
+                        include __DIR__ . "/../View/recuperar_senha/recuperar_senha.php";
                         return;
                     }
                 }
@@ -112,16 +126,16 @@
                         $result = Banco::Conn()->query($sql);
                         if ($result->num_rows > 0) {
                             $recuperar = true;
-                            include __DIR__ . "/../View/recuperar_senha/recuperar_nova.html";
+                            include __DIR__ . "/../View/recuperar_senha/recuperar_nova.php";
                             return;
                         }else{
                             echo "<p>Data de nascimento incorreta.<p>";
-                            include __DIR__ . "/../View/recuperar_senha/recuperar_cpf.html";
+                            include __DIR__ . "/../View/recuperar_senha/recuperar_cpf.php";
                             return;
                         }
                     } else{ 
                         echo "<p>Cpf incorreto.</p>";
-                        include __DIR__ . "/../View/recuperar_senha/recuperar_cpf.html";
+                        include __DIR__ . "/../View/recuperar_senha/recuperar_cpf.php";
                         return;
                     }
                 }
@@ -144,7 +158,7 @@
             }
         
             // Primeira vez acessando
-            include __DIR__ . "/../View/recuperar_senha/recuperar_senha.html";
+            include __DIR__ . "/../View/recuperar_senha/recuperar_senha.php";
         }
         
         public static function excluir($id) {
@@ -159,6 +173,11 @@
         public static function editar($id) {
 
             if($_SERVER["REQUEST_METHOD"] === "POST"){
+
+                if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+                    die("Erro: token CSRF inválido.");
+                }
+
                 $aluno = [$_POST["nome"], $_POST["usuario"], $_POST["nivel_acesso"], $_POST["cursos_matriculados"], $_POST["cpf"], $_POST["data_nasc"]];
                 $nome = $aluno[0];
                 $usuario = $aluno[1];

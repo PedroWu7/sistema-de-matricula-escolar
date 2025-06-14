@@ -154,6 +154,8 @@
                 <label for="criarSenha">Senha</label>
                 <input type="password" id="criarSenha" name="criarSenha" required>
             </div>
+
+            <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
             
             <button type="submit" class="btn btn-fill">Criar Conta</button>
             
