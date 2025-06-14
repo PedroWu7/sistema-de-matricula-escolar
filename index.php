@@ -28,7 +28,7 @@
 
 
         "adicionar" => CursoController::adicionar(),
-        "atualizar" => CursoController::atualizar($url[2]);
+        "atualizar" => CursoController::atualizar($url[2]),
         "participar" => CursoController::participar($url[2]),
 
 
