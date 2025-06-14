@@ -1,3 +1,5 @@
+<?php require_once __DIR__ . '/../Utils/csrf.php'; ?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>

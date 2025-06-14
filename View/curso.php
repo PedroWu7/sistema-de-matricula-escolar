@@ -1,3 +1,7 @@
+<?php
+require_once __DIR__ . "/../utils/csrf.php";
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -370,9 +374,7 @@
 
   <main>
     <?php
-    require_once __DIR__ . "/../Controller/CursoController.php";
-    require_once __DIR__ . "/../Controller/ComentarioController.php";
-    require_once __DIR__ . "/../Model/Comentario.php";
+
     $curso = CursoController::ver();
     $_SESSION["curso"] = $curso;
     ?>
@@ -395,6 +397,7 @@
     
             <form method="POST" action="" class="comment-form">
               <textarea id="comment-textarea" name="comentario" rows="4" placeholder="Escreva seu comentário aqui..." required maxlength="500"></textarea>
+              <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
               <div class="form-footer">
                   <button type="submit" class="btn btn-fill">
                       <i class="fas fa-paper-plane"></i> Enviar Comentário

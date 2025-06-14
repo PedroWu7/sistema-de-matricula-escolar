@@ -17,10 +17,24 @@
                 header("Location: ./../");
                 return;
             }
+
             if ($_SERVER["REQUEST_METHOD"] == "POST"){
-                Curso::adicionar($_POST["criarNome"], $_POST["criarImagem"], $_POST["criarDescricao"], $_POST["addProfessor"]);
+                if (!isset($_POST["csrf_token"]) || $_POST["csrf_token"] !== $_SESSION["csrf_token"]) {
+                    $_SESSION["mensagem_alerta"] = "Erro de segurança: token inválido.";
+                    header("Location: ./../");
+                    exit;
+                }
+
+                Curso::adicionar(
+                    $_POST["criarNome"], 
+                    $_POST["criarImagem"], 
+                    $_POST["criarDescricao"], 
+                    $_POST["addProfessor"]
+                );
+
             }
-            include __DIR__ . "/../View/adicionar_curso.html";
+
+            include __DIR__ . "/../View/adicionar_curso.php";
         }
 
         static function atualizar($id){
@@ -40,6 +54,11 @@
                     echo "ID não encontrado.";
                     exit;
                 }
+            }
+
+            // Validação CSRF
+            if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+                die('Erro: token CSRF inválido.');
             }
 
             if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -119,7 +138,7 @@
                     exit;
                 }
             }
-            // Obtém o URL da página anterior ou define uma página padrão (ex: 'index.php')
+            // Obtém o URL da página anterior ou define uma página padrão
             $url_anterior = $_SERVER['HTTP_REFERER'] ?? 'index.php'; 
 
             header("Location: " . $url_anterior);
@@ -144,7 +163,7 @@
                 echo $novos_alunos;
                 $sql2 = "UPDATE `cursos` SET `alunos` = '$novos_alunos' WHERE `cursos`.`id` = $idCurso;";
                 Banco::Conn()->query($sql2);
-                // Obtém o URL da página anterior ou define uma página padrão (ex: 'index.php')
+                // Obtém o URL da página anterior ou define uma página padrão.
                 $url_anterior = $_SERVER['HTTP_REFERER'] ?? 'index.php'; 
 
                 header("Location: " . $url_anterior);

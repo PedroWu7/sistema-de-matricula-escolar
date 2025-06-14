@@ -43,7 +43,7 @@
 
             }
             
-            include __DIR__ . "/../View/cadastrar.html";
+            include __DIR__ . "/../View/cadastrar.php";
 
         }
 

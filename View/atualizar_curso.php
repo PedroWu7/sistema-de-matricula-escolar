@@ -1,3 +1,5 @@
+<?php require_once __DIR__ . '/../Utils/csrf.php'; ?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -154,6 +156,8 @@
                 <label for="professor">Professor (Nome)</label>
                 <input type="text" id="professor" name="professor" value="<?= $curso['professor'] ?>">
             </div>
+
+            <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
             
             <button type="submit" class="btn btn-fill">Atualizar Curso</button>
 
