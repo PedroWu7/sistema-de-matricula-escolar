@@ -124,9 +124,32 @@
                     exit;
                 }
             }
-
             header("Location: ./../");
             exit;
+        }
+
+        static function usuarioInscritoCurso($idCurso, $nomeUsuario){
+            $conn = Banco::Conn();
+            $sql = "SELECT * FROM cursos WHERE alunos LIKE '%$nomeUsuario%' AND id = $idCurso";
+            $resp = $conn->query($sql);
+            if($resp->num_rows > 0){
+                return true;
+            }
+        }
+
+        static function sair($idCurso){
+            if(CursoController::usuarioInscritoCurso($idCurso, $_SESSION["usuario"])){
+                $sql = "SELECT * from cursos WHERE id = '$idCurso'";
+                $resp = Banco::Conn()->query($sql);
+                $resp = $resp->fetch_assoc();
+                $novos_alunos = str_replace($_SESSION["usuario"] . ";", "", $resp["alunos"]);
+                echo $novos_alunos;
+                $sql2 = "UPDATE `cursos` SET `alunos` = '$novos_alunos' WHERE `cursos`.`id` = $idCurso;";
+                Banco::Conn()->query($sql2);
+                header("location: ./../../ver/curso/" . $idCurso);
+            } else {
+                echo "Vc não está matriculado nesse curso.";
+            }
         }
     }
 ?>

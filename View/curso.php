@@ -27,6 +27,7 @@
       --white-color: #FFFFFF;
       --danger-color: #E53E3E;
       --danger-hover: #C53030;
+      
 
       --border-radius: 12px;
       --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
@@ -78,7 +79,12 @@
       background: linear-gradient(45deg, var(--primary-color), #9F7AEA); color: var(--white-color);
       box-shadow: 0 4px 10px rgba(128, 90, 213, 0.25);
     }
+    .btn-danger { 
+      background: linear-gradient(45deg, var(--danger-color), #C53030); color: var(--white-color);
+      box-shadow: 0 4px 10px rgba(213, 90, 106, 0.25);
+    }
     .btn-fill:hover { background: linear-gradient(45deg, var(--primary-hover), #805AD5); }
+    .btn-danger:hover { background: linear-gradient(45deg, var(--danger-hover), #C53030); }
     .btn-outline { background-color: transparent; color: var(--body-text); border-color: var(--border-color); }
     .btn-outline:hover { background-color: var(--sidebar-bg); border-color: var(--light-text); }
 
@@ -202,6 +208,12 @@
       padding: 1.5rem;
     }
     .summary-content .btn-fill {
+      width: 100%;
+      padding: 0.8rem;
+      font-size: 1rem;
+    }
+
+    .summary-content .btn-danger {
       width: 100%;
       padding: 0.8rem;
       font-size: 1rem;
@@ -338,6 +350,9 @@
       main { padding: 1.5rem; }
       .course-hero h1 { font-size: 2.2rem; }
     }
+
+    .btn-danger { background-color: var(--danger-color); color: var(--white-color); }
+    .btn-danger:hover { background-color: var(--danger-hover); }
   </style>
 </head>
 <body>
@@ -363,43 +378,15 @@
     ?>
 
     <section class="course-hero">
-      <p class="category">Desenvolvimento Web</p>
       <h1><?= htmlspecialchars($curso['nome']) ?></h1>
-      <p class="subtitle">Aprenda a construir interfaces de utilizador modernas e reativas com a biblioteca mais popular do mercado.</p>
     </section>
 
     <div class="course-layout">
       <div class="course-details">
         <h2>Sobre este Curso</h2>
         <p class="description">
-          Neste curso abrangente, você mergulhará fundo no ecossistema React. Começaremos com os conceitos fundamentais como JSX, componentes, estado e props, e avançaremos progressivamente para tópicos complexos, incluindo a gestão de estado com Context API e Redux, roteamento com React Router, e testes de componentes. Ao final, você será capaz de projetar e construir aplicações web robustas, escaláveis e de alta performance.
+          <?= $curso["descricao"] ?>
         </p>
-
-        <h2>O que irá aprender</h2>
-        <div class="modules-list">
-          <div class="module">
-            <h3 class="module-header" data-target="#module-1-lessons">
-                <span>Módulo 1: Fundamentos do React</span>
-                <i class="fas fa-chevron-down module-chevron"></i>
-            </h3>
-            <ul class="lessons-list" id="module-1-lessons">
-              <li>Introdução ao JSX</li>
-              <li>Componentes e Props</li>
-              <li>Estado e Ciclo de Vida</li>
-            </ul>
-          </div>
-          <div class="module">
-            <h3 class="module-header" data-target="#module-2-lessons">
-                <span>Módulo 2: Hooks e Tópicos Avançados</span>
-                <i class="fas fa-chevron-down module-chevron"></i>
-            </h3>
-            <ul class="lessons-list" id="module-2-lessons">
-              <li>useState e useEffect</li>
-              <li>useContext e custom Hooks</li>
-              <li>Performance e Otimização</li>
-            </ul>
-          </div>
-        </div>
 
         <!-- SEÇÃO DE COMENTÁRIOS -->
         <?php if(($_SESSION['nivel_acesso'] ?? 'visitante') !== "visitante"){?>
@@ -455,8 +442,12 @@
         <div class="summary-card">
           <img src="<?= htmlspecialchars($curso['imagem']) ?>" alt="Banner do curso">
           <div class="summary-content">
-            <a href="../../participar/curso/<?= htmlspecialchars($curso['id'] ?? 0) ?>" class="btn btn-fill">
-              <i class="fas fa-check"></i> Participar no Curso
+            <?php
+                    if(CursoController::usuarioInscritoCurso($curso["id"], $_SESSION["usuario"])){ ?>
+                      <a href="./../../sair/curso/<?= $curso["id"] ?>" class="btn btn-danger">Sair do curso</a>
+                    <?php } else {?>
+                        <a href="./../../participar/curso/<?= $curso["id"] ?>" class="btn btn-fill">Participar</a>
+                  <?php } ?>
             </a>
             <ul class="summary-list">
               <li>

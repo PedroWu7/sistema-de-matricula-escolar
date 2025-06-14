@@ -1,3 +1,4 @@
+<a class="btn btn-outline" href="/sistema-de-matricula-escolar/">Página inicial</a>
 <a class="btn btn-outline" href="/sistema-de-matricula-escolar/sobre">Sobre</a>
 <?php if(isset($_SESSION["usuario"]) && $_SESSION["usuario"] !== "" && $_SESSION["usuario"] !== "Guest") { ?>
 <a class="btn btn-outline" href="/sistema-de-matricula-escolar/meus-cursos">Meus Cursos</a>

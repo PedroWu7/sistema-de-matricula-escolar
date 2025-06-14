@@ -26,6 +26,7 @@
         "meus-cursos" => HomeController::meusCursos(),
         "recuperar-senha" => UsuarioController::recuperarSenha(),
         "sobre" => HomeController::sobre(),
+        "sair" => HomeController::sair($url),
         default => HomeController::index()
     }
 ?>

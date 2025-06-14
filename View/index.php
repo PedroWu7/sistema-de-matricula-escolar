@@ -270,7 +270,12 @@
                   <a href="atualizar/curso/<?= $curso[0] ?>" class="btn btn-outline">Editar</a>
                 <?php } else { ?>
                   <a href="ver/curso/<?= $curso[0] ?>" class="btn btn-outline">Ver mais</a>
-                  <a href="participar/curso/<?= $curso[0] ?>" class="btn btn-fill">Participar</a>
+                  <?php
+                    if(CursoController::usuarioInscritoCurso($curso[0], $_SESSION["usuario"])){ ?>
+                      <a href="sair/curso/<?= $curso[0] ?>" class="btn btn-danger">Sair do curso</a>
+                    <?php } else {?>
+                        <a href="participar/curso/<?= $curso[0] ?>" class="btn btn-fill">Participar</a>
+                  <?php } ?>
                 <?php } ?>
               </div>
             </div>
