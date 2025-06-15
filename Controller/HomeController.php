@@ -1,4 +1,5 @@
 <?php
+    require_once __DIR__ . "/../Utils/csrf.php";
     class HomeController {
 
         static function index() {
@@ -79,7 +80,7 @@
         }
 
         static function sobre(){
-            include __DIR__ . "/../View/sobre.html";
+            include __DIR__ . "/../View/sobre.php";
         }
 
         static function excluir($url) {

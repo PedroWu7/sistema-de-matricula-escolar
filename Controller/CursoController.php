@@ -1,6 +1,7 @@
 <?php
     require_once __DIR__ . "/../Model/Curso.php";
     require_once __DIR__ . "/UsuarioController.php";
+    require_once __DIR__ . "/../Utils/csrf.php";
     
     if (session_status() === PHP_SESSION_NONE) {
       session_start();
@@ -56,12 +57,11 @@
                 }
             }
 
-            // Validação CSRF
-            if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
-                die('Erro: token CSRF inválido.');
-            }
-
             if ($_SERVER["REQUEST_METHOD"] === "POST") {
+                // Validação CSRF
+                if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+                    die('Erro: token CSRF inválido.');
+                }
                 $id = intval($_POST["id"]);
                 $nome = $_POST["nome"];
                 $imagem = $_POST["imagem"];
@@ -95,8 +95,9 @@
                 }
             }
 
-            header("Location: ./../");
-            exit;
+            $url_anterior = $_SERVER['HTTP_REFERER'] ?? 'index.php'; 
+
+            header("Location: " . $url_anterior);
         }
 
         static function ver(){

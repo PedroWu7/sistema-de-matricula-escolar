@@ -1,6 +1,6 @@
 <?php
     require_once __DIR__ . "/../Model/Usuario.php";
-    session_start();
+    require_once __DIR__ . "/../Utils/csrf.php";
 
     class UsuarioController{
         static function login(){
@@ -73,7 +73,7 @@
             if(str_contains($curso_alunos, $idCurso)){
                 return "inscrito";
             }
-
+            $idCurso = $idCurso . ";";
             $novos_cursos = $curso_alunos . $idCurso;
 
             $sql2 = "UPDATE alunos SET cursos_matriculados = '$novos_cursos' WHERE id = $idUsuario";

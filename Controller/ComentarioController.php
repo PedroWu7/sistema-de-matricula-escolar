@@ -1,6 +1,7 @@
 <?php
     require_once __DIR__ . "/../Model/Comentario.php";
     require_once __DIR__ . "/CursoController.php";
+    require_once __DIR__ . "/../Utils/csrf.php";
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }

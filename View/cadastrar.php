@@ -33,6 +33,7 @@
       background-color: var(--bg-color);
       color: var(--body-text);
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       min-height: 100vh;
