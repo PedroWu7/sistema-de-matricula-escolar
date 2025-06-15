@@ -48,5 +48,28 @@
             }
         }
 
+        public static function editar($id, $nome, $usuario, $nivel_acesso, $cursos_matriculados, $cpf, $data_nasc) {
+            $conn = Banco::conn();
+
+            $sql = "UPDATE alunos SET nome = ?, usuario = ?, nivel_acesso = ?, cursos_matriculados = ?, cpf = ?, data_nasc = ? WHERE id = ?";
+
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("ssssssi", $nome, $usuario, $nivel_acesso, $cursos_matriculados, $cpf, $data_nasc, $id);
+            $stmt->execute();
+
+            header("Location: ./../../../gerenciar/usuarios");
+            exit;
+    }
+
+
+        public static function excluir($id) {
+            $conn = Banco::conn();
+            $sql = "DELETE FROM alunos WHERE id=?";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute([$id]);
+            header("location: ./../../../gerenciar/usuarios");
+            exit;
+        }
+
     } 
 ?>

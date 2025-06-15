@@ -46,7 +46,7 @@
                 include __DIR__ . "/../View/utilizadores.php";
             }
             if($url[1] === "remover"){
-                UsuarioController::excluir($url[3]);
+                Usuario::excluir($url[3]);
             }
             if($url[1] === "editar"){
                 UsuarioController::editar($url[3]);

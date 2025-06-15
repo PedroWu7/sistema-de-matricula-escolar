@@ -163,14 +163,7 @@
             include __DIR__ . "/../View/recuperar_senha/recuperar_senha.php";
         }
         
-        public static function excluir($id) {
-            $pdo = Banco::conn();
-            $sql = "DELETE FROM alunos WHERE id=?";
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute([$id]);
-            header("location: ./../../../gerenciar/usuarios");
-            exit;
-        }
+        
 
         public static function editar($id) {
 
@@ -187,12 +180,9 @@
                 $cursos_matriculados = $aluno[3];
                 $cpf = $aluno[4];
                 $data_nasc = $aluno[5];
-                $conn = Banco::Conn();
 
-                $sql = "UPDATE `alunos` SET `nome` = '$nome', `usuario` = '$usuario', `nivel_acesso` = '$nivel_acesso', `cursos_matriculados` = '$cursos_matriculados', `cpf` = '$cpf', `data_nasc` = '$data_nasc' WHERE `alunos`.`id` = $id;";
+                Usuario::editar($id, $nome, $usuario, $nivel_acesso, $cursos_matriculados, $cpf, $data_nasc);
 
-                $conn->query($sql);
-                header("location: ./../../../gerenciar/usuarios");
             }
             
             include __DIR__ . "/../View/editar_utilizador.php";
