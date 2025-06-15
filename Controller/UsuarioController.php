@@ -59,34 +59,24 @@
 
         }
 
-        static function matricular($idUsuario, $idCurso){
-            if($_SESSION["nivel_acesso"] !== "aluno"){
+        static function matricular($idUsuario, $idCurso) {
+            if ($_SESSION["nivel_acesso"] !== "aluno") {
                 $_SESSION["mensagem_alerta"] = "Se cadastre para se inscrever em algum curso.";
                 header("Location: ./../");
                 return;
             }
-            $conn = Banco::Conn();
 
-            $sql = "SELECT * FROM alunos WHERE id = '$idUsuario'";
-            $resp = $conn->query($sql);
-            if($resp->num_rows > 0){
-                $curso_alunos = $resp->fetch_assoc()["cursos_matriculados"];
-            }
-            if(str_contains($curso_alunos, $idCurso)){
+            //buscar cursos atuais do aluno
+            $curso_alunos = Usuario::buscarCursosMatriculados($idUsuario);
+
+            //verificar se já está matriculado
+            if (str_contains($curso_alunos, $idCurso . ";")) {
                 return "inscrito";
             }
-            $idCurso = $idCurso . ";";
-            $novos_cursos = $curso_alunos . $idCurso;
 
-            $sql2 = "UPDATE alunos SET cursos_matriculados = '$novos_cursos' WHERE id = $idUsuario";
-            $resp = Banco::Conn()->query($sql2);
-        }
-
-        static function listar(){
-            $sql = "SELECT * FROM alunos;";
-            $resp = Banco::Conn()->query($sql);
-            $alunos = $resp->fetch_all();
-            return $alunos;
+            //concatenar novo curso e atualizar
+            $novosCursos = $curso_alunos . $idCurso . ";";
+            Usuario::atualizarCursosMatriculados($idUsuario, $novosCursos);
         }
 
         static function recuperarSenha() {
@@ -95,75 +85,58 @@
                 if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
                     die("Erro: token CSRF inválido.");
                 }
-        
-                // Etapa 1: Verifica o usuário
+
+                //verificação do usuário
                 if (isset($_POST["inputUsuario"])) {
                     $inputUsuario = $_POST["inputUsuario"];
-                    $sql = "SELECT * FROM alunos WHERE usuario = '$inputUsuario'";
-                    $result = Banco::Conn()->query($sql);
-        
-                    if ($result->num_rows > 0) {
-                        // Salva o usuário temporariamente na sessão
+
+                    if (Usuario::existe($inputUsuario)) {
                         $_SESSION["usuario_recuperacao"] = $inputUsuario;
                         include __DIR__ . "/../View/recuperar_senha/recuperar_cpf.php";
                         return;
                     } else {
-                        echo "<p>Usuário não encontrado.</p>";
+                        $_SESSION["mensagem_alerta"] = "Usuário não encontrado.";
                         include __DIR__ . "/../View/recuperar_senha/recuperar_senha.php";
                         return;
                     }
                 }
-        
-                // Etapa 2: Verifica o CPF e data de nascimento
+
+                //verificação de CPF e nascimento
                 if (isset($_POST["inputCpf"]) && isset($_POST["inputNascimento"])) {
                     $inputCpf = $_POST["inputCpf"];
                     $inputNasc = $_POST["inputNascimento"];
                     $usuario = $_SESSION["usuario_recuperacao"];
 
-                    $sql = "SELECT * FROM alunos WHERE cpf = '$inputCpf'";
-                    $result = Banco::Conn()->query($sql);
-
-                    if ($result->num_rows > 0) {
-                        $sql = "SELECT * FROM alunos WHERE data_nasc = '$inputNasc'";
-                        $result = Banco::Conn()->query($sql);
-                        if ($result->num_rows > 0) {
-                            $recuperar = true;
-                            include __DIR__ . "/../View/recuperar_senha/recuperar_nova.php";
-                            return;
-                        }else{
-                            echo "<p>Data de nascimento incorreta.<p>";
-                            include __DIR__ . "/../View/recuperar_senha/recuperar_cpf.php";
-                            return;
-                        }
-                    } else{ 
-                        echo "<p>Cpf incorreto.</p>";
+                    if (Usuario::verificaCpfNascimento($usuario, $inputCpf, $inputNasc)) {
+                        include __DIR__ . "/../View/recuperar_senha/recuperar_nova.php";
+                        return;
+                    } else {
+                        $_SESSION["mensagem_alerta"] = "Dados incorretos.";
                         include __DIR__ . "/../View/recuperar_senha/recuperar_cpf.php";
                         return;
                     }
                 }
 
-                if(isset($_POST["inputSenha"])){
+                // atualizar senha
+                if (isset($_POST["inputSenha"])) {
                     $senha = $_POST["inputSenha"];
                     $inputUsuario = $_SESSION["usuario_recuperacao"];
-                    $hash_armazenado = password_hash($senha, PASSWORD_DEFAULT);
-                    $conn = Banco::Conn();
-                    $stmt = $conn->prepare("UPDATE alunos SET senha = ? WHERE usuario = ?");
-                    $stmt->bind_param("ss", $hash_armazenado, $inputUsuario);
-                    $stmt->execute();
-                    //echo "$inputUsuario";
-                    //echo "$hash_armazenado";
-                    //echo "$senha";
-                    $_SESSION["mensagem_alerta"] = "Senha alterada com sucesso!";
-                    header("location: /sistema-de-matricula-escolar/");
-                    return;
+
+                    if (Usuario::atualizarSenha($inputUsuario, $senha)) {
+                        $_SESSION["mensagem_alerta"] = "Senha alterada com sucesso!";
+                        header("location: /sistema-de-matricula-escolar/");
+                        exit;
+                    } else {
+                        $_SESSION["mensagem_alerta"] = "Erro ao atualizar senha.";
+                        include __DIR__ . "/../View/recuperar_senha/recuperar_nova.php";
+                        return;
+                    }
                 }
             }
-        
-            // Primeira vez acessando
+
             include __DIR__ . "/../View/recuperar_senha/recuperar_senha.php";
         }
-        
-        
+
 
         public static function editar($id) {
 
@@ -188,11 +161,8 @@
             include __DIR__ . "/../View/editar_utilizador.php";
         }
 
-        static function pegarPorId($id){
-            $sql = "SELECT * FROM alunos WHERE id = '$id';";
-            $resp = Banco::Conn()->query($sql);
-            $aluno = $resp->fetch_assoc();
-            return $aluno;
+        static function pegarPorId($id){    
+            return Usuario::pegarPorId($id);
         }
     }
 ?>

@@ -3,6 +3,37 @@
 
 
     class Usuario {
+        public static function listar(){
+            $sql = "SELECT * FROM alunos;";
+            $resp = Banco::Conn()->query($sql);
+            $alunos = $resp->fetch_all();
+            return $alunos;
+        }
+
+        static function pegarPorId($id){
+            $sql = "SELECT * FROM alunos WHERE id = '$id';";
+            $resp = Banco::Conn()->query($sql);
+            $aluno = $resp->fetch_assoc();
+            return $aluno;
+        }
+
+
+        public static function buscarCursosMatriculados($idUsuario) {
+            $conn = Banco::Conn();
+            $stmt = $conn->prepare("SELECT cursos_matriculados FROM alunos WHERE id = ?");
+            $stmt->bind_param("i", $idUsuario);
+            $stmt->execute();
+            $result = $stmt->get_result();
+        return $result->fetch_assoc()["cursos_matriculados"] ?? "";
+        }
+
+        public static function atualizarCursosMatriculados($idUsuario, $novosCursos) {
+            $conn = Banco::Conn();
+            $stmt = $conn->prepare("UPDATE alunos SET cursos_matriculados = ? WHERE id = ?");
+            $stmt->bind_param("si", $novosCursos, $idUsuario);
+            return $stmt->execute();
+        }
+
         public static function login($usuario, $senha){
             
             $q = "SELECT * FROM alunos WHERE usuario = '$usuario'";
@@ -29,6 +60,8 @@
             }
             return false;
         }
+
+        
 
         static function adicionar($nome, $usuario, $senha, $dataNasc, $cpf) {
             $hash_armazenado = password_hash($senha, PASSWORD_DEFAULT);
@@ -70,6 +103,25 @@
             header("location: ./../../../gerenciar/usuarios");
             exit;
         }
+
+        public static function verificaCpfNascimento($usuario, $cpf, $nascimento) {
+            $sql = "SELECT * FROM alunos WHERE usuario = ? AND cpf = ? AND data_nasc = ?";
+            $conn = Banco::Conn();
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("sss", $usuario, $cpf, $nascimento);
+            $stmt->execute();
+            $res = $stmt->get_result();
+            return $res->num_rows > 0;
+        }
+
+        public static function atualizarSenha($usuario, $novaSenha) {
+            $hash = password_hash($novaSenha, PASSWORD_DEFAULT);
+            $conn = Banco::Conn();
+            $stmt = $conn->prepare("UPDATE alunos SET senha = ? WHERE usuario = ?");
+            $stmt->bind_param("ss", $hash, $usuario);
+            return $stmt->execute();
+        }
+
 
     } 
 ?>

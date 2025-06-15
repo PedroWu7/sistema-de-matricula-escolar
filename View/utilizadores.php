@@ -244,7 +244,7 @@
           </thead>
           <tbody>
             <?php
-              $utilizadores = UsuarioController::listar();
+              $utilizadores = Usuario::listar();
               foreach ($utilizadores as $utilizador) {
             ?>
             <tr>
