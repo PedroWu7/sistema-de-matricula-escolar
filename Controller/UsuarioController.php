@@ -10,7 +10,6 @@
                     die("Erro: token CSRF inválido.");
                 }
 
-
                 $inputUsuario = $_POST["inputUsuario"];
                 $inputSenha = $_POST["inputSenha"];
 
@@ -21,6 +20,9 @@
                     $_SESSION["usuario"] = $login["usuario"];
                     $_SESSION["nivel_acesso"] = $login["nivel_acesso"];
                     $_SESSION["cursos_matriculados"] = $login["cursos_matriculados"];
+
+                    setcookie("usuario_logado", $login["usuario"], time() + (3 * 24 * 60 * 60), "/");
+
                     header("location: index");
                 } else { ?>
                     <p>Usuário ou senha incorretos.</p>

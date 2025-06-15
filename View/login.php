@@ -141,7 +141,7 @@ require_once __DIR__ . "/../Utils/csrf.php";
             <h1>Login</h1>
             <div class="form-group">
                 <label for="inputUsuario">Utilizador</label>
-                <input type="text" id="inputUsuario" name="inputUsuario" required>
+                <input type="text" id="inputUsuario" name="inputUsuario" value="<?= htmlspecialchars($_COOKIE['usuario_logado'] ?? '') ?>" required>
             </div>
             
             <div class="form-group">
