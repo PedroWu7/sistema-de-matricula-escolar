@@ -19,7 +19,8 @@
         "recuperar-senha" => UsuarioController::recuperarSenha(),
 
         "logout" => HomeController::logout(),
-        "excluir" => HomeController::excluir($url),        
+        "excluir" => HomeController::excluir($url),  
+        "editar" => ComentarioController::editar($url[2]),        
         "gerenciar" => HomeController::gerenciar($url),
         "ver" => HomeController::ver($url[2]),
         "meus-cursos" => HomeController::meusCursos(),

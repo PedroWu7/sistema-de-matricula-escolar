@@ -26,6 +26,17 @@
             header("Location: ./../../ver/curso/$curso_id");
             exit;
         }
+
+        public static function editar($comentario_id) {
+            if($_SERVER["REQUEST_METHOD"] === "POST"){
+                $novoComentario = $_POST["comentario"];
+                Comentario::editar($comentario_id, $novoComentario);
+            }
             
+
+            $curso_id = $_SESSION["curso"]["id"];
+            header("Location: ./../../ver/curso/$curso_id");
+            exit;
+        }
     }
 ?>

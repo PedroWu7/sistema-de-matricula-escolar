@@ -16,6 +16,8 @@ require_once __DIR__ . "/../Utils/csrf.php";
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
   <style>
+    /* ======= SEU CSS INTEIRO MANTIDO ======= */
+
     :root {
       --primary-color: #805AD5;
       --primary-hover: #6B46C1;
@@ -32,7 +34,6 @@ require_once __DIR__ . "/../Utils/csrf.php";
       --danger-color: #E53E3E;
       --danger-hover: #C53030;
       
-
       --border-radius: 12px;
       --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
     }
@@ -337,26 +338,95 @@ require_once __DIR__ . "/../Utils/csrf.php";
       padding: 3rem 2rem;
       margin-top: 4rem;
       color: var(--light-text);
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       border-top: 1px solid var(--border-color);
+      background-color: rgba(45, 55, 72, 0.85);
+      backdrop-filter: saturate(180%) blur(8px);
+      -webkit-backdrop-filter: saturate(180%) blur(8px);
     }
 
-    @media (max-width: 992px) {
-      .course-layout {
-        grid-template-columns: 1fr;
-      }
-      .course-sidebar {
-        position: static;
-        margin-top: 3rem;
-      }
-    }
-    @media (max-width: 768px) {
-      main { padding: 1.5rem; }
-      .course-hero h1 { font-size: 2.2rem; }
+    /* Botões dentro do comentário */
+    .comment-actions {
+      display: flex;
+      gap: 0.5rem;
     }
 
-    .btn-danger { background-color: var(--danger-color); color: var(--white-color); }
-    .btn-danger:hover { background-color: var(--danger-hover); }
+    .comment-edit-btn,
+    .comment-delete-btn {
+      background-color: transparent;
+      border: none;
+      color: var(--light-text);
+      cursor: pointer;
+      font-size: 0.9rem;
+      padding: 0.5rem;
+      border-radius: 6px;
+      transition: color 0.2s, background-color 0.2s;
+    }
+
+    .comment-edit-btn:hover {
+      color: var(--primary-color);
+      background-color: rgba(128, 90, 213, 0.1);
+    }
+
+    .comment-delete-btn:hover {
+      color: var(--danger-color);
+      background-color: rgba(229, 62, 62, 0.1);
+    }
+
+    /* Formulário de edição inline do comentário */
+    .comment-edit-form textarea {
+      width: 100%;
+      background-color: var(--sidebar-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1rem;
+      color: var(--body-text);
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      resize: vertical;
+      min-height: 100px;
+      margin-top: 0.5rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .comment-edit-form textarea:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(128, 90, 213, 0.25);
+    }
+    .comment-edit-form .form-buttons {
+      margin-top: 0.5rem;
+      display: flex;
+      gap: 0.5rem;
+    }
+    .btn-save {
+      background-color: var(--primary-color);
+      color: var(--white-color);
+      border: none;
+      padding: 0.5rem 1.2rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.2s;
+    }
+    .btn-save:hover {
+      background-color: var(--primary-hover);
+    }
+    .btn-cancel {
+      background-color: transparent;
+      border: 1px solid var(--light-text);
+      color: var(--light-text);
+      padding: 0.5rem 1.2rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.2s, color 0.2s;
+    }
+    .btn-cancel:hover {
+      background-color: var(--light-text);
+      color: var(--bg-color);
+      border-color: var(--light-text);
+    }
+
   </style>
 </head>
 <body>
@@ -374,7 +444,6 @@ require_once __DIR__ . "/../Utils/csrf.php";
 
   <main>
     <?php
-
     $curso = CursoController::ver();
     $_SESSION["curso"] = $curso;
     ?>
@@ -411,21 +480,41 @@ require_once __DIR__ . "/../Utils/csrf.php";
             <div class="comments-list">
               <?php if (!empty($comentarios)): ?>
                 <?php foreach ($comentarios as $comentario): ?>
-                  <div class="comment-card">
+                  <div class="comment-card" data-comentario-id="<?= $comentario[0] ?>">
                     <div class="comment-header">
                       <p class="comment-author"><?= htmlspecialchars($comentario[2]) ?></p>
-                      
+
                       <?php if (($_SESSION['nivel_acesso'] ?? '') !== 'visitante') { ?>
-                        <a href="../../excluir/comentario/<?= $comentario[0] ?>" 
-                           class="comment-delete-btn" 
-                           title="Excluir comentário" 
-                           onclick="return confirm('Tem certeza de que deseja excluir este comentário?');">
-                           <i class="fas fa-trash"></i>
-                        </a>
+                        <div class="comment-actions">
+                          <!-- Botão Editar -->
+                          <button type="button" class="comment-edit-btn" title="Editar comentário">
+                            <i class="fas fa-edit"></i>
+                          </button>
+
+                          <!-- Botão Excluir -->
+                          <a href="../../excluir/comentario/<?= $comentario[0] ?>"
+                             class="comment-delete-btn"
+                             title="Excluir comentário"
+                             onclick="return confirm('Tem certeza de que deseja excluir este comentário?');">
+                             <i class="fas fa-trash"></i>
+                          </a>
+                        </div>
                       <?php } ?>
-                      
                     </div>
+
+                    <!-- Texto do comentário em um parágrafo -->
                     <p class="comment-body"><?= nl2br(htmlspecialchars($comentario[3])) ?></p>
+
+                    <!-- Formulário de edição escondido -->
+                    <form method="POST" action="../../editar/comentario/<?= $comentario[0] ?>" class="comment-edit-form" style="display:none;">
+                      <textarea name="comentario" rows="4" maxlength="500"><?= htmlspecialchars($comentario[3]) ?></textarea>
+                      <input type="hidden" name="comentario_id" value="<?= $comentario[0] ?>">
+                      <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
+                      <div class="form-buttons">
+                        <button type="submit" class="btn-save">Salvar</button>
+                        <button type="button" class="btn-cancel">Cancelar</button>
+                      </div>
+                    </form>
                   </div>
                 <?php endforeach; ?>
               <?php else: ?>
@@ -434,10 +523,10 @@ require_once __DIR__ . "/../Utils/csrf.php";
             </div>
           </div>
         <?php } else { ?>
-            <div class="comments-section">
-                <h2>Comentários</h2>
-                <p>Você precisa <a href="../../login" style="color: var(--primary-color);">fazer login</a> para ver e deixar comentários.</p>
-            </div>
+          <div class="comments-section">
+              <h2>Comentários</h2>
+              <p>Você precisa <a href="../../login" style="color: var(--primary-color);">fazer login</a> para ver e deixar comentários.</p>
+          </div>
         <?php } ?>
       </div>
 
@@ -446,12 +535,11 @@ require_once __DIR__ . "/../Utils/csrf.php";
           <img src="<?= htmlspecialchars($curso['imagem']) ?>" alt="Banner do curso"> 
           <div class="summary-content">
             <?php
-                    if(Curso::usuarioInscritoCurso($curso["id"], $_SESSION["usuario"])){ ?>
-                      <a href="./../../sair/curso/<?= $curso["id"] ?>" class="btn btn-danger">Sair do curso</a>
-                    <?php } else {?>
-                        <a href="./../../participar/curso/<?= $curso["id"] ?>" class="btn btn-fill">Participar</a>
-                  <?php } ?>
-            </a>
+            if(Curso::usuarioInscritoCurso($curso["id"], $_SESSION["usuario"])){ ?>
+              <a href="./../../sair/curso/<?= $curso["id"] ?>" class="btn btn-danger">Sair do curso</a>
+            <?php } else { ?>
+              <a href="./../../participar/curso/<?= $curso["id"] ?>" class="btn btn-fill">Participar</a>
+            <?php } ?>
             <ul class="summary-list">
               <li>
                 <span class="label">Nível</span>
@@ -479,27 +567,61 @@ require_once __DIR__ . "/../Utils/csrf.php";
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    // Lógica para módulos expansíveis (collapsible)
-    const moduleHeaders = document.querySelectorAll('.module-header');
-    
-    // Deixa todos os módulos fechados por defeito, exceto o primeiro
-    moduleHeaders.forEach((header, index) => {
-        const content = document.querySelector(header.dataset.target);
-        if (content) {
-            if (index === 0) {
-                header.classList.add('active');
-            } else {
-                content.classList.add('collapsed');
-            }
-        }
-        
-        header.addEventListener('click', () => {
-            header.classList.toggle('active');
-            if (content) {
-                content.classList.toggle('collapsed');
-            }
-        });
+  const comments = document.querySelectorAll('.comment-card');
+
+  comments.forEach(commentCard => {
+    const editBtn = commentCard.querySelector('.comment-edit-btn');
+    const deleteBtn = commentCard.querySelector('.comment-delete-btn');
+    const commentBody = commentCard.querySelector('.comment-body');
+    const editForm = commentCard.querySelector('.comment-edit-form');
+    const cancelBtn = editForm.querySelector('.btn-cancel');
+
+    editBtn.addEventListener('click', () => {
+      commentBody.style.display = 'none';
+      editForm.style.display = 'block';
+      editBtn.style.display = 'none';
+      if(deleteBtn) deleteBtn.style.display = 'none';
     });
+
+    cancelBtn.addEventListener('click', () => {
+      commentBody.style.display = 'block';
+      editForm.style.display = 'none';
+      editBtn.style.display = 'inline-block';
+      if(deleteBtn) deleteBtn.style.display = 'inline-block';
+    });
+  });
+
+  // módulos expansíveis (se tiver essa parte)
+  const moduleHeaders = document.querySelectorAll('.module-header');
+  moduleHeaders.forEach((header, index) => {
+    const content = document.querySelector(header.dataset.target);
+    if(content){
+      if(index === 0){
+        header.classList.add('active');
+      } else {
+        content.classList.add('collapsed');
+      }
+
+      header.addEventListener('click', () => {
+        header.classList.toggle('active');
+        content.classList.toggle('collapsed');
+      });
+    }
+  });
+
+  // contador de caracteres no textarea do comentário
+  const commentTextarea = document.getElementById('comment-textarea');
+  if(commentTextarea){
+    const formFooter = commentTextarea.closest('form').querySelector('.form-footer');
+    const counter = document.createElement('div');
+    counter.className = 'char-counter';
+    counter.textContent = `0 / ${commentTextarea.maxLength}`;
+    formFooter.insertBefore(counter, formFooter.firstChild);
+
+    commentTextarea.addEventListener('input', () => {
+      counter.textContent = `${commentTextarea.value.length} / ${commentTextarea.maxLength}`;
+    });
+  }
 });
 </script>
 
