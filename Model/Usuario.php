@@ -29,9 +29,9 @@
 
         public static function atualizarCursosMatriculados($idUsuario, $novosCursos) {
             $conn = Banco::Conn();
-            $stmt = $conn->prepare("UPDATE alunos SET cursos_matriculados = ? WHERE id = ?");
-            $stmt->bind_param("si", $novosCursos, $idUsuario);
-            return $stmt->execute();
+            $sql = "UPDATE alunos SET cursos_matriculados = '$novosCursos' WHERE id = '$idUsuario'";
+            $conn->query($sql);
+
         }
 
         public static function login($usuario, $senha){
@@ -84,16 +84,12 @@
         public static function editar($id, $nome, $usuario, $nivel_acesso, $cursos_matriculados, $cpf, $data_nasc) {
             $conn = Banco::conn();
 
-            $sql = "UPDATE alunos SET nome = ?, usuario = ?, nivel_acesso = ?, cursos_matriculados = ?, cpf = ?, data_nasc = ? WHERE id = ?";
+            $sql = "UPDATE alunos SET nome = '$nome', usuario = '$usuario', nivel_acesso = '$nivel_acesso', cursos_matriculados = '$cursos_matriculados', cpf = '$cpf', data_nasc = '$data_nasc' WHERE id = '$id'";
 
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("ssssssi", $nome, $usuario, $nivel_acesso, $cursos_matriculados, $cpf, $data_nasc, $id);
-            $stmt->execute();
-
+            $conn->query($sql);
             header("Location: ./../../../gerenciar/usuarios");
             exit;
     }
-
 
         public static function excluir($id) {
             $conn = Banco::conn();
@@ -104,21 +100,23 @@
         }
 
         public static function verificaCpfNascimento($usuario, $cpf, $nascimento) {
-            $sql = "SELECT * FROM alunos WHERE usuario = ? AND cpf = ? AND data_nasc = ?";
+            $sql = "SELECT * FROM alunos WHERE usuario = '$usuario' AND cpf = '$cpf' AND data_nasc = '$nascimento'";
             $conn = Banco::Conn();
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("sss", $usuario, $cpf, $nascimento);
-            $stmt->execute();
-            $res = $stmt->get_result();
-            return $res->num_rows > 0;
+            $res = $conn->query($sql);
+
+            if($res->num_rows > 0){
+                return true;
+            }
+
+            return false;
         }
 
         public static function atualizarSenha($usuario, $novaSenha) {
             $hash = password_hash($novaSenha, PASSWORD_DEFAULT);
             $conn = Banco::Conn();
-            $stmt = $conn->prepare("UPDATE alunos SET senha = ? WHERE usuario = ?");
-            $stmt->bind_param("ss", $hash, $usuario);
-            return $stmt->execute();
+            $sql = "UPDATE alunos SET senha = '$hash' WHERE usuario = '$usuario'";
+            
+            return $conn->query($sql);
         }
 
 

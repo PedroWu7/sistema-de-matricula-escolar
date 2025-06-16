@@ -15,9 +15,9 @@ class Comentario {
     }
 
     public static function excluir($comentario_id) {
-        $conn = Banco::Conn();
-        $sql = "DELETE FROM comentarios WHERE id = $comentario_id";
-        return $conn->query($sql);
+      $conn = Banco::Conn();
+      $sql = "DELETE FROM comentarios WHERE id = $comentario_id";
+      return $conn->query($sql);
     }
 
     public static function editar($comentario_id, $novoComentario) {

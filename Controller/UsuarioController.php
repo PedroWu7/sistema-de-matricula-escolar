@@ -123,7 +123,7 @@
                     $inputUsuario = $_SESSION["usuario_recuperacao"];
 
                     if (Usuario::atualizarSenha($inputUsuario, $senha)) {
-                        echo "Senha alterada com sucesso!";
+                        $_SESSION["mensagem_alerta"] = "Senha alterada com sucesso!";
                         header("location: /sistema-de-matricula-escolar/");
                         exit;
                     } else {
