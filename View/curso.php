@@ -443,10 +443,10 @@ require_once __DIR__ . "/../Utils/csrf.php";
 
       <aside class="course-sidebar">
         <div class="summary-card">
-          <img src="<?= htmlspecialchars($curso['imagem']) ?>" alt="Banner do curso">
+          <img src="<?= htmlspecialchars($curso['imagem']) ?>" alt="Banner do curso"> 
           <div class="summary-content">
             <?php
-                    if(CursoController::usuarioInscritoCurso($curso["id"], $_SESSION["usuario"])){ ?>
+                    if(Curso::usuarioInscritoCurso($curso["id"], $_SESSION["usuario"])){ ?>
                       <a href="./../../sair/curso/<?= $curso["id"] ?>" class="btn btn-danger">Sair do curso</a>
                     <?php } else {?>
                         <a href="./../../participar/curso/<?= $curso["id"] ?>" class="btn btn-fill">Participar</a>

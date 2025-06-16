@@ -74,5 +74,23 @@
                 return $cursos;
             }
         }
+
+        static function usuarioInscritoCurso($idCurso, $nomeUsuario){
+            $conn = Banco::Conn();
+            $sql = "SELECT * FROM cursos WHERE alunos LIKE '%$nomeUsuario%' AND id = $idCurso";
+            $resp = $conn->query($sql);
+            if($resp->num_rows > 0){
+                return true;
+            }
+        }
+
+        static function atualizarAlunos($idCurso, $novaListaAlunos) {
+            $conn = Banco::Conn();
+            $sql = "UPDATE cursos SET alunos = ? WHERE id = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("si", $novaListaAlunos, $idCurso);
+            return $stmt->execute();
+        }
+
     } 
 ?>

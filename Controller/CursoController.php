@@ -8,9 +8,6 @@
     }
 
     class CursoController {
-        static function listar(){
-            return Curso::listar();
-        }
 
         static function adicionar(){
             if($_SESSION["nivel_acesso"] !== "administrador"){
@@ -127,7 +124,7 @@
                 header("Location: ./../");
                 return;
             }
-           $pagina = $_GET['p'] ?? null;
+            $pagina = $_GET['p'] ?? null;
             $url = explode('/', $pagina);
             if (isset($url[2])) {
                 $id = intval($url[2]);
@@ -146,34 +143,27 @@
             exit(); // É crucial chamar exit() após um redirecionamento para parar a execução do script.
         }
 
-        static function usuarioInscritoCurso($idCurso, $nomeUsuario){
-            $conn = Banco::Conn();
-            $sql = "SELECT * FROM cursos WHERE alunos LIKE '%$nomeUsuario%' AND id = $idCurso";
-            $resp = $conn->query($sql);
-            if($resp->num_rows > 0){
-                return true;
-            }
-        }
+        
 
-        static function sair($idCurso){
-            if(CursoController::usuarioInscritoCurso($idCurso, $_SESSION["usuario"])){
-                $sql = "SELECT * from cursos WHERE id = '$idCurso'";
+        static function sair($idCurso) {
+            $usuario = $_SESSION["usuario"];
 
-                $resp = Banco::Conn()->query($sql);
-                $resp = $resp->fetch_assoc();
-                $novos_alunos = str_replace($_SESSION["usuario"] . ";", "", $resp["alunos"]);
-                
-                echo $novos_alunos;
-                $sql2 = "UPDATE `cursos` SET `alunos` = '$novos_alunos' WHERE `cursos`.`id` = $idCurso;";
-                Banco::Conn()->query($sql2);
-                // Obtém o URL da página anterior ou define uma página padrão.
-                $url_anterior = $_SERVER['HTTP_REFERER'] ?? 'index.php'; 
+            if (Curso::usuarioInscritoCurso($idCurso, $usuario)) {
+                $curso = Curso::ver($idCurso);
+                $alunos = $curso["alunos"];
+                $novaLista = str_replace($usuario . ";", "", $alunos);
 
-                header("Location: " . $url_anterior);
-                exit(); // É crucial chamar exit() após um redirecionamento para parar a execução do script.
+                if (Curso::atualizarAlunos($idCurso, $novaLista)) {
+                    $url_anterior = $_SERVER['HTTP_REFERER'] ?? 'index.php';
+                    header("Location: " . $url_anterior);
+                    exit;
+                } else {
+                    echo "Erro ao atualizar o curso.";
+                }
             } else {
-                echo "Vc não está matriculado nesse curso.";
+                echo "Você não está matriculado nesse curso.";
             }
         }
     }
+
 ?>

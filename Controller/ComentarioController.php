@@ -6,25 +6,26 @@
         session_start();
     }
     class ComentarioController{
+
         public static function listarPorCurso() {
-            $conn = Banco::Conn(); 
             $pagina = $_GET['p'] ?? null;
             $url = explode('/', $pagina);
             $curso_id = intval($url[2] ?? 0);
-        
-            $sql = "SELECT * FROM comentarios WHERE curso_id = $curso_id ORDER BY horario DESC";
-            $resultado = $conn->query($sql);
-            return $resultado->fetch_all();
-        
+
+            $comentarios = Comentario::listarPorCurso($curso_id);
+            $comentarios = $comentarios->fetch_all();
+
             return $comentarios;
         }
+
+
         public static function excluirComentario($comentario_id) {
-            $conn = Banco::Conn(); 
-            $sql = "DELETE FROM comentarios WHERE id = $comentario_id";
-            $resp = $conn->query($sql);
+            Comentario::excluir($comentario_id);
+
             $curso_id = $_SESSION["curso"]["id"];
             header("Location: ./../../ver/curso/$curso_id");
-            exit; 
+            exit;
         }
+            
     }
 ?>

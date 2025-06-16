@@ -1,5 +1,6 @@
 <?php
     require_once __DIR__ . "/../Utils/csrf.php";
+
     class HomeController {
 
         static function index() {

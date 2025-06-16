@@ -3,8 +3,8 @@
     require_once __DIR__ . "/../Utils/csrf.php";
 
     class UsuarioController{
-        static function login(){
 
+        static function login(){
             if ($_SERVER["REQUEST_METHOD"] === "POST"){
                 if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
                     die("Erro: token CSRF inválido.");
