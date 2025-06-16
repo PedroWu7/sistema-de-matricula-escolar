@@ -97,9 +97,8 @@
 
         public static function excluir($id) {
             $conn = Banco::conn();
-            $sql = "DELETE FROM alunos WHERE id=?";
-            $stmt = $conn->prepare($sql);
-            $stmt->execute([$id]);
+            $sql = "DELETE FROM alunos WHERE id='$id'";
+            $conn->query($sql);
             header("location: ./../../../gerenciar/usuarios");
             exit;
         }

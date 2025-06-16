@@ -111,7 +111,7 @@
                         include __DIR__ . "/../View/recuperar_senha/recuperar_nova.php";
                         return;
                     } else {
-                        $_SESSION["mensagem_alerta"] = "Dados incorretos.";
+                        echo "Dados incorretos.";
                         include __DIR__ . "/../View/recuperar_senha/recuperar_cpf.php";
                         return;
                     }
@@ -123,11 +123,11 @@
                     $inputUsuario = $_SESSION["usuario_recuperacao"];
 
                     if (Usuario::atualizarSenha($inputUsuario, $senha)) {
-                        $_SESSION["mensagem_alerta"] = "Senha alterada com sucesso!";
+                        echo "Senha alterada com sucesso!";
                         header("location: /sistema-de-matricula-escolar/");
                         exit;
                     } else {
-                        $_SESSION["mensagem_alerta"] = "Erro ao atualizar senha.";
+                        echo "Erro ao atualizar senha.";
                         include __DIR__ . "/../View/recuperar_senha/recuperar_nova.php";
                         return;
                     }
