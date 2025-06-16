@@ -16,7 +16,6 @@ require_once __DIR__ . "/../Utils/csrf.php";
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
   <style>
-    /* ======= SEU CSS INTEIRO MANTIDO ======= */
 
     :root {
       --primary-color: #805AD5;
@@ -246,7 +245,7 @@ require_once __DIR__ . "/../Utils/csrf.php";
       color: var(--dark-text);
     }
 
-    /* ===== ESTILOS DA SEÇÃO DE COMENTÁRIOS ===== */
+    /* ESTILOS DA SEÇÃO DE COMENTÁRIOS */
     .comments-section {
         margin-top: 4rem;
         padding-top: 2rem;
