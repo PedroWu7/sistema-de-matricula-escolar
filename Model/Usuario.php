@@ -20,11 +20,15 @@
 
         public static function buscarCursosMatriculados($idUsuario) {
             $conn = Banco::Conn();
-            $stmt = $conn->prepare("SELECT cursos_matriculados FROM alunos WHERE id = ?");
-            $stmt->bind_param("i", $idUsuario);
-            $stmt->execute();
-            $result = $stmt->get_result();
-        return $result->fetch_assoc()["cursos_matriculados"] ?? "";
+        
+            $sql = "SELECT cursos_matriculados FROM alunos WHERE id = $idUsuario";
+            $result = $conn->query($sql);
+        
+            if ($result && $row = $result->fetch_assoc()) {
+                return $row["cursos_matriculados"] ?? "";
+            }
+        
+            return "";
         }
 
         public static function atualizarCursosMatriculados($idUsuario, $novosCursos) {
