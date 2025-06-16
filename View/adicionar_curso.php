@@ -162,7 +162,7 @@
             <button type="submit" class="btn btn-fill">Criar Curso</button>
 
             <div class="links-footer">
-                <a href="javascript:history.back()">Voltar</a>
+                <a href="../index">Voltar</a>
             </div>
         </form>
     </div>

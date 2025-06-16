@@ -10,11 +10,16 @@
     class CursoController {
 
         static function adicionar(){
+
+            
+
             if($_SESSION["nivel_acesso"] !== "administrador"){
                 $_SESSION["mensagem_alerta"] = "Você não tem acesso a essa página.";
                 header("Location: ./../");
                 return;
             }
+
+            include __DIR__ . "/../View/adicionar_curso.php";
 
             if ($_SERVER["REQUEST_METHOD"] == "POST"){
                 if (!isset($_POST["csrf_token"]) || $_POST["csrf_token"] !== $_SESSION["csrf_token"]) {
@@ -32,7 +37,6 @@
 
             }
 
-            include __DIR__ . "/../View/adicionar_curso.php";
         }
 
         static function atualizar($id){

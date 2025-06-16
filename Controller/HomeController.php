@@ -40,18 +40,27 @@
         static function gerenciar($url) {
             if (!isset($_SESSION["nivel_acesso"]) || $_SESSION["nivel_acesso"] !== "administrador") {
                 $_SESSION["mensagem_alerta"] = "Você não tem acesso a essa página.";
-                header("Location: ../");
+                header("Location: ./"); 
                 exit;
             }  
-            if($url[1] === "usuarios"){
-                include __DIR__ . "/../View/utilizadores.php";
+
+            if(isset($url[1])){
+                if($url[1] === "usuarios"){
+                    include __DIR__ . "/../View/utilizadores.php";
+                    return;
+                }
+                if($url[1] === "remover"){
+                    Usuario::excluir($url[3]);
+                    return;
+                }
+                if($url[1] === "editar"){
+                    UsuarioController::editar($url[3]);
+                    return;
+                }
+
             }
-            if($url[1] === "remover"){
-                Usuario::excluir($url[3]);
-            }
-            if($url[1] === "editar"){
-                UsuarioController::editar($url[3]);
-            }  
+              
+            HomeController::index();
         }
 
         static function ver() {
@@ -85,12 +94,18 @@
         }
 
         static function excluir($url) {
-            if($url[1] === "curso"){
-                CursoController::excluir($url[2]);
+            if(isset($url[1])){
+                if($url[1] === "curso"){
+                    CursoController::excluir($url[2]);
+                    return;
+                }
+                if($url[1] === "comentario"){
+                    ComentarioController::excluirComentario($url[2]);
+                    return;
+                }
             }
-            if($url[1] === "comentario"){
-                ComentarioController::excluirComentario($url[2]);
-            }
+            
+            HomeController::index();
         }
 
         static function sair($url){
@@ -98,5 +113,6 @@
                 CursoController::sair($url[2]);
             }
         }
+        
     }
 ?>
