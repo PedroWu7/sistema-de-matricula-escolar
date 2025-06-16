@@ -72,13 +72,12 @@
             
             if ($hash_armazenado) {
                 $conn = Banco::Conn();
-                $stmt = $conn->prepare("INSERT INTO alunos (nome, usuario, senha, nivel_acesso, cursos_matriculados, cpf, data_nasc) VALUES (?, ?, ?, 'aluno', NULL, ?, ?)");
-                $stmt->bind_param("sssss", $nome, $usuario, $hash_armazenado, $cpf, $dataNasc);
-        
-                if ($stmt->execute()) {
+                $sql = "INSERT INTO alunos (nome, usuario, senha, nivel_acesso, cursos_matriculados, cpf, data_nasc) VALUES ('$nome', '$usuario', '$hash_armazenado', 'aluno', NULL, '$cpf', '$dataNasc')";
+                
+                if ($conn->query($sql)) {
                     echo "Usuário criado com sucesso!";
                 } else {
-                    echo "Erro ao criar o usuário: " . $stmt->error;
+                    echo "Erro ao criar o usuário: " . $conn->error;
                 }
             } else {
                 echo "Erro ao gerar o hash da senha.";

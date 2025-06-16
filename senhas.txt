@@ -1,11 +1,20 @@
 admin:
     usuario: admin
-    senha: admin
+    senha: 123
 
 kaue:
     usuario: kaue
     senha: 123
 
-pedro: 
-    usuario: pedro
-    seha: 123
+pedro:
+    usuário: pedro
+    senha: 123
+
+teste: 
+    usuario: teste
+    senha: 123
+
+teste2
+    usuario: teste2
+    senha: 123
+

@@ -86,11 +86,10 @@
 
         static function atualizarAlunos($idCurso, $novaListaAlunos) {
             $conn = Banco::Conn();
-            $sql = "UPDATE cursos SET alunos = ? WHERE id = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("si", $novaListaAlunos, $idCurso);
-            return $stmt->execute();
+            $sql = "UPDATE cursos SET alunos = '$novaListaAlunos' WHERE id = $idCurso";
+            return $conn->query($sql);
         }
+
 
     } 
 ?>

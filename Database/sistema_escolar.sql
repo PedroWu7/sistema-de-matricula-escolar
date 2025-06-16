@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 13/06/2025 às 00:12
+-- Tempo de geração: 16/06/2025 às 21:48
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -43,9 +43,11 @@ CREATE TABLE `alunos` (
 --
 
 INSERT INTO `alunos` (`id`, `nome`, `usuario`, `senha`, `nivel_acesso`, `cursos_matriculados`, `cpf`, `data_nasc`) VALUES
-(4, 'teste', 'teste', '$2y$10$75mvCtqrd6pup.DKWE4cdeziWcm8hudXjwcIjIqNyoCZ2LhStEYDi', 'aluno', '2;', '', '0000-00-00'),
 (5, 'admin', 'admin', '$2y$10$K3cxriXUKfBGW9LkHW/qQuy5QrX0kawqmSn4EryElETzmXjfDj4EK', 'administrador', NULL, '', '0000-00-00'),
-(9, 'teste2', 'teste2', '$2y$10$k0Vhm4/AUofUC2EWb2sX/OVLDYxvQpaONojVC13n9TeCf2tOks4tO', 'aluno', NULL, '123.456.789-00', '2025-06-12');
+(9, 'teste2', 'teste2', '$2y$10$kGIFF6GDjVdkt9qX9QQfDeeMxRyqfgf5Yy1H7rMX3Ju3e/5VA5vSi', 'aluno', NULL, '123.456.789-01', '2025-06-12'),
+(10, 'kaue', 'kaue', '$2y$10$pElUfPJi0GiqV5yIcX5Boeuxb2Na3XMxxDXg1FaKNvOjwEgo6RX4q', 'aluno', '3;', '111.111.111-11', '2006-03-11'),
+(11, 'teste', 'teste', '$2y$10$t8Iov1J.UsJkxA065rnp8uIhMtZUuARtTF.cFVPouiFUlUQJbgtHO', 'aluno', NULL, '123.456.789-00', '2025-06-16'),
+(12, 'pedro', 'pedro', '$2y$10$/YvrYw0sAl9cdYawi5wT6O0EEAOkAMUXsq86vyrHL94zuLxzpJz.u', 'aluno', '2;6;', '123.123.123-12', '2025-06-13');
 
 -- --------------------------------------------------------
 
@@ -67,8 +69,9 @@ CREATE TABLE `comentarios` (
 
 INSERT INTO `comentarios` (`id`, `curso_id`, `autor`, `texto`, `horario`) VALUES
 (1, 2, 'teste', 'oi', '2025-06-12 16:19:11'),
-(2, 2, 'teste', 'dsa', '2025-06-12 16:53:58'),
-(3, 2, 'teste', 'dsa', '2025-06-12 16:54:21');
+(4, 3, 'kaue', 'bom', '2025-06-16 08:55:15'),
+(6, 4, 'kaue', 'curso lixo', '2025-06-16 08:57:49'),
+(7, 2, 'pedro', 'muito boa as aulas do professor', '2025-06-16 09:45:54');
 
 -- --------------------------------------------------------
 
@@ -90,10 +93,13 @@ CREATE TABLE `cursos` (
 --
 
 INSERT INTO `cursos` (`id`, `nome`, `imagem`, `descricao`, `alunos`, `professor`) VALUES
-(2, 'Curso de PHP', 'https://www.cursoemvideo.com/wp-content/uploads/2019/08/php.jpg', 'Curso muito bom de PHP', 'teste;', NULL),
-(3, 'Curso de C#', 'https://i.ytimg.com/vi/oTivhgjbhIg/maxresdefault.jpg', 'Curso topzeira de C#', NULL, NULL),
-(4, 'Curso de Java', 'https://i.ytimg.com/vi/mxDMTtCEPAY/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAbxR_ldk5IsxV2dVUPhcyJrksDTA', 'Melhor curso de Java', NULL, NULL),
-(6, 'Fazer bolos', 'https://aprender.buzzero.com/buzzers/enfermeiro-coelho/67883/HotSiteImage.jpg', 'melhor curso de bolos', NULL, '0');
+(2, 'Curso de PHP', 'https://www.cursoemvideo.com/wp-content/uploads/2019/08/php.jpg', 'Aprenda PHP do zero e crie sites e sistemas dinâmicos com banco de dados.\r\n\r\n', 'pedro;', ''),
+(3, 'Curso de C#', 'https://i.ytimg.com/vi/oTivhgjbhIg/maxresdefault.jpg', 'Domine os fundamentos do C# e programe aplicações com orientação a objetos.\r\n\r\n', 'kaue;', ''),
+(4, 'Curso de Java', 'https://i.ytimg.com/vi/mxDMTtCEPAY/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAbxR_ldk5IsxV2dVUPhcyJrksDTA', 'Aprenda Java do básico à orientação a objetos e desenvolva aplicações robustas e seguras.\r\n\r\n', NULL, ''),
+(6, 'Fazer bolos', 'https://aprender.buzzero.com/buzzers/enfermeiro-coelho/67883/HotSiteImage.jpg', 'Aprenda receitas práticas e técnicas para fazer bolos fofinhos, recheados e prontos para vender ou encantar a família.\r\n\r\n', 'pedro;', ''),
+(7, 'Inglês Rápido para Viagens', 'https://i.ytimg.com/vi/rUP8vFRB-YY/maxresdefault.jpg', 'Um curso prático com frases-chave, vocabulário e simulações para quem vai viajar e precisa se comunicar bem.\r\n\r\n', '', ''),
+(8, 'Marketing Digital para Iniciantes', 'https://static.dinamize.com.br/dinamizeszmsdg3x/uploads/2024/06/marketing-digital-para-iniciantes-5.png', 'Conheça os pilares do marketing digital: redes sociais, tráfego pago, SEO e funil de vendas.\r\n\r\n', NULL, ''),
+(9, 'Design Gráfico para Iniciantes', 'https://i.ytimg.com/vi/EkdVg9u88-0/maxresdefault.jpg', 'Descubra os princípios básicos do design gráfico e comece a criar artes profissionais com ferramentas gratuitas.\r\n\r\n', NULL, '');
 
 --
 -- Índices para tabelas despejadas
@@ -126,19 +132,19 @@ ALTER TABLE `cursos`
 -- AUTO_INCREMENT de tabela `alunos`
 --
 ALTER TABLE `alunos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de tabela `comentarios`
 --
 ALTER TABLE `comentarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de tabela `cursos`
 --
 ALTER TABLE `cursos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

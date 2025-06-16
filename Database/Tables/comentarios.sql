@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3307
--- Tempo de geração: 16/06/2025 às 14:00
--- Versão do servidor: 10.4.21-MariaDB
--- Versão do PHP: 8.0.12
+-- Host: 127.0.0.1
+-- Tempo de geração: 16/06/2025 às 21:48
+-- Versão do servidor: 10.4.32-MariaDB
+-- Versão do PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -33,7 +33,7 @@ CREATE TABLE `comentarios` (
   `autor` varchar(100) NOT NULL,
   `texto` text NOT NULL,
   `horario` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `comentarios`
@@ -42,7 +42,8 @@ CREATE TABLE `comentarios` (
 INSERT INTO `comentarios` (`id`, `curso_id`, `autor`, `texto`, `horario`) VALUES
 (1, 2, 'teste', 'oi', '2025-06-12 16:19:11'),
 (4, 3, 'kaue', 'bom', '2025-06-16 08:55:15'),
-(6, 4, 'kaue', 'curso lixo', '2025-06-16 08:57:49');
+(6, 4, 'kaue', 'curso lixo', '2025-06-16 08:57:49'),
+(7, 2, 'pedro', 'muito boa as aulas do professor', '2025-06-16 09:45:54');
 
 --
 -- Índices para tabelas despejadas
@@ -62,7 +63,7 @@ ALTER TABLE `comentarios`
 -- AUTO_INCREMENT de tabela `comentarios`
 --
 ALTER TABLE `comentarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
